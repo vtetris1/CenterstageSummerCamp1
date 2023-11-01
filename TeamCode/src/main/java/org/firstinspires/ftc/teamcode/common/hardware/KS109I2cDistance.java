@@ -14,7 +14,7 @@ import java.util.Hashtable;
 
 @I2cDeviceType
 @DeviceProperties(name = "KS 109", description = "a KS 109", xmlTag = "KS109I2cDistance")  // KS109I2cDistance is built-in
-public class KS109I2cDistance extends I2cDeviceSynchDevice<I2cDeviceSynch> implements   I2cAddrConfig
+public classKS109I2cDistance extends I2cDeviceSynchDevice<I2cDeviceSynch> implements   I2cAddrConfig
 {
     //----------------------------------------------------------------------------------------------
     // Constants

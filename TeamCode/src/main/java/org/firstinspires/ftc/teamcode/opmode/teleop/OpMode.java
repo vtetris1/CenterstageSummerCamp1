@@ -29,7 +29,7 @@ public class OpMode extends LinearOpMode {
 
             robot.setDrivePower(vertical+turn-horizontal,vertical-turn+horizontal,vertical+turn+horizontal,vertical-turn-horizontal);
 
-/*            if (-gamepad2.left_stick_y > 0.1){
+            if (-gamepad2.left_stick_y > 0.1){
                 robot.setArmPower(0.8);
             }
             else if (-gamepad2.left_stick_y < -0.1){
@@ -38,7 +38,7 @@ public class OpMode extends LinearOpMode {
             else{
                 robot.setArmPower(0);
             }
-*/
+
             // tilt 0.7 is highest junction tilt
             //robot.tiltServo.setPosition(Math.max(Math.min((gamepad2.right_stick_y+1)/2, 0.8),0.55));
 

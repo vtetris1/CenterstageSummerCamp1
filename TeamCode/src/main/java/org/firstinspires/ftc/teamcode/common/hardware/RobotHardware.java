@@ -52,9 +52,10 @@ public class RobotHardware {
     public DcMotor frontRightDrive   = null;
     public DcMotor backRightDrive   = null;
     public DcMotor backLeftDrive   = null;
-
     public DcMotor armRightMotor = null;
     public DcMotor armLeftMotor = null;
+
+    public DcMotor linearSlider = null;
 
     public Servo tiltServo = null;
     public Servo grabServo = null;
@@ -79,6 +80,8 @@ public class RobotHardware {
         frontRightDrive = hwMap.get(DcMotor.class, "motorfr");
         backLeftDrive  = hwMap.get(DcMotor.class, "motorbl");
         backRightDrive = hwMap.get(DcMotor.class, "motorbr");
+        linearSlider = hwMap.get(DcMotor.class, "motorls");
+
 //        armRightMotor   = hwMap.get(DcMotor.class, "armR");
 //        armLeftMotor   = hwMap.get(DcMotor.class, "armL");
 
@@ -129,6 +132,7 @@ public class RobotHardware {
     public void setArmsMode(DcMotor.RunMode mode) {
         armLeftMotor.setMode(mode);
         armRightMotor.setMode(mode);
+        linearSlider.setMode(mode);
     }
 
 
@@ -142,6 +146,7 @@ public class RobotHardware {
     public void setArmPower(double armPower){
         armRightMotor.setPower(armPower);
         armLeftMotor.setPower(armPower);
+        linearSlider.setPower(armPower);
     }
 
 
