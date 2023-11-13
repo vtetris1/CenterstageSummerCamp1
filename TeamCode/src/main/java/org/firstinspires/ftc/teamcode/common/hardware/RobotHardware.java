@@ -52,13 +52,12 @@ public class RobotHardware {
     public DcMotor frontRightDrive   = null;
     public DcMotor backRightDrive   = null;
     public DcMotor backLeftDrive   = null;
-    public DcMotor armRightMotor = null;
-    public DcMotor armLeftMotor = null;
-
     public DcMotor linearSlider = null;
 
     public Servo tiltServo = null;
     public Servo grabServo = null;
+
+    public Servo airplaneLauncher = null;
 
     BNO055IMU imu;
 
@@ -82,8 +81,6 @@ public class RobotHardware {
         backRightDrive = hwMap.get(DcMotor.class, "motorbr");
         linearSlider = hwMap.get(DcMotor.class, "motorls");
 
-//        armRightMotor   = hwMap.get(DcMotor.class, "armR");
-//        armLeftMotor   = hwMap.get(DcMotor.class, "armL");
 
         // set Brake zero power behavior
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -93,10 +90,8 @@ public class RobotHardware {
 
         // reverse motor directions
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);  /*should reverse motor direction;
-        the reverse motor code wasn't really working
+        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
-//        armLeftMotor.setDirection(DcMotor.Direction.REVERSE);
 
 
 
@@ -104,11 +99,10 @@ public class RobotHardware {
         setDrivetrainMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
-/*        tiltServo = hwMap.get(Servo.class, "tiltServo");
+        tiltServo = hwMap.get(Servo.class, "tiltServo");
         grabServo = hwMap.get(Servo.class, "grabServo");
-        tiltServo.setPosition(0.5);
-        grabServo.setPosition(0.5);
-*/
+        airplaneLauncher = hwMap.get(Servo.class, "launcher");
+
         // imu parameters
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -130,22 +124,39 @@ public class RobotHardware {
         backRightDrive.setMode(mode);
     }
     public void setArmsMode(DcMotor.RunMode mode) {
-        armLeftMotor.setMode(mode);
-        armRightMotor.setMode(mode);
         linearSlider.setMode(mode);
     }
 
 
     public void setDrivePower(double fl, double fr, double bl, double br) {
+        if (fl > 1.0)
+            fl = 1.0;
+        else if (fl < -1.0)
+            fl = -1.0;
+
+        if (fr > 1.0)
+            fr = 1.0;
+        else if (fr < -1.0)
+            fr = -1.0;
+
+        if (bl > 1.0)
+            bl = 1.0;
+        else if (bl < -1.0)
+            bl = -1.0;
+
+        if (br > 1.0)
+            br = 1.0;
+        else if (br < -1.0)
+            br = -1.0;
+
         frontLeftDrive.setPower(fl);
         frontRightDrive.setPower(fr);
         backLeftDrive.setPower(bl);
         backRightDrive.setPower(br * (-1)); //had to manually reverse (the -1 reversed it) (Line:93)
+
     }
     public void setAllDrivePower(double p){ setDrivePower(p,p,p,p);}
     public void setArmPower(double armPower){
-        armRightMotor.setPower(armPower);
-        armLeftMotor.setPower(armPower);
         linearSlider.setPower(armPower);
     }
 
@@ -155,3 +166,12 @@ public class RobotHardware {
 
 
 }
+/* port 1 fl
+   port 2 bl
+   port 0 arm
+   extension hub port 2 fr
+   extension hub port 3 br
+   launch 0 exttension hub
+   tilt 1 extention hub
+   grab 2 extention hub
+ */
