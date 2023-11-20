@@ -22,13 +22,13 @@ public class OpMode extends LinearOpMode {
         // Put initialization blocks here.
         waitForStart();
         while (opModeIsActive()) {
-            double horizontal = gamepad1.left_stick_x * 1.0;
-            double vertical = -gamepad1.left_stick_y * 1.0;
-            double turn = gamepad1.right_stick_x * 1.0;
+            double horizontal = gamepad1.left_stick_x * 0.5;
+            double vertical = -gamepad1.left_stick_y * 0.5;
+            double turn = gamepad1.right_stick_x * 0.5;
 
             robot.setDrivePower(vertical+turn-horizontal,vertical-turn+horizontal,vertical+turn+horizontal,vertical-turn-horizontal);
 
-            if (-gamepad2.left_stick_y > 0.1){
+/*            if (-gamepad2.left_stick_y > 0.1){
                 robot.setArmPower(0.45);
             }
             else if (-gamepad2.left_stick_y < -0.1){
@@ -40,6 +40,7 @@ public class OpMode extends LinearOpMode {
 
             //servos
 
+//grabber
             if (gamepad2.left_trigger > 0.5) {
                 robot.grabServo.setPosition(0.4); // open
             }
@@ -47,7 +48,7 @@ public class OpMode extends LinearOpMode {
                 robot.grabServo.setPosition(1); // close
             }
 
-
+//airplane launcher
             if (gamepad1.a) {
                 robot.airplaneLauncher.setPosition(0.5); //works
             }
@@ -77,7 +78,13 @@ public class OpMode extends LinearOpMode {
                 else robot.tiltServo.setPosition(initTilt);
             }
 
+
+ */
             telemetry.update();
+
+
         }
     }
+
 }
+

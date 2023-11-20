@@ -52,13 +52,13 @@ public class RobotHardware {
     public DcMotor frontRightDrive   = null;
     public DcMotor backRightDrive   = null;
     public DcMotor backLeftDrive   = null;
-    public DcMotor linearSlider = null;
+//    public DcMotor linearSlider = null;
 
-    public Servo tiltServo = null;
-    public Servo grabServo = null;
+//    public Servo tiltServo = null;
+//    public Servo grabServo = null;
 
-    public Servo airplaneLauncher = null;
-
+//    public Servo airplaneLauncher = null;
+//    public Servo autoPixel = null;
     BNO055IMU imu;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
@@ -79,7 +79,7 @@ public class RobotHardware {
         frontRightDrive = hwMap.get(DcMotor.class, "motorfr");
         backLeftDrive  = hwMap.get(DcMotor.class, "motorbl");
         backRightDrive = hwMap.get(DcMotor.class, "motorbr");
-        linearSlider = hwMap.get(DcMotor.class, "motorls");
+        //linearSlider = hwMap.get(DcMotor.class, "motorls");
 
 
         // set Brake zero power behavior
@@ -88,20 +88,20 @@ public class RobotHardware {
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        // reverse motor directions
-        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        // Define and initialize ALL installed servos.
+        //tiltServo = hwMap.get(Servo.class, "tiltServo");
+        //grabServo = hwMap.get(Servo.class, "grabServo");
+        //airplaneLauncher = hwMap.get(Servo.class, "launcher");
+        //autoPixel = hwMap.get(Servo.class, "autoPixel");
 
+        // reverse motor directions
+        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
 
 
 
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         setDrivetrainMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        // Define and initialize ALL installed servos.
-        tiltServo = hwMap.get(Servo.class, "tiltServo");
-        grabServo = hwMap.get(Servo.class, "grabServo");
-        airplaneLauncher = hwMap.get(Servo.class, "launcher");
 
         // imu parameters
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -124,7 +124,7 @@ public class RobotHardware {
         backRightDrive.setMode(mode);
     }
     public void setArmsMode(DcMotor.RunMode mode) {
-        linearSlider.setMode(mode);
+        //linearSlider.setMode(mode);
     }
 
 
@@ -152,12 +152,12 @@ public class RobotHardware {
         frontLeftDrive.setPower(fl);
         frontRightDrive.setPower(fr);
         backLeftDrive.setPower(bl);
-        backRightDrive.setPower(br * (-1)); //had to manually reverse (the -1 reversed it) (Line:93)
+        backRightDrive.setPower(br); //had to manually reverse (the -1 reversed it) (Line:93)
 
     }
     public void setAllDrivePower(double p){ setDrivePower(p,p,p,p);}
     public void setArmPower(double armPower){
-        linearSlider.setPower(armPower);
+        //linearSlider.setPower(armPower);
     }
 
 
@@ -166,12 +166,13 @@ public class RobotHardware {
 
 
 }
-/* port 1 fl
+/* port 0 ls
+   port 1 fl
    port 2 bl
-   port 0 arm
    extension hub port 2 fr
    extension hub port 3 br
    launch 0 exttension hub
    tilt 1 extention hub
    grab 2 extention hub
+   create new expansion hub
  */
