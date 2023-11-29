@@ -52,6 +52,10 @@ public class RobotHardware {
     public DcMotor frontRightDrive   = null;
     public DcMotor backRightDrive   = null;
     public DcMotor backLeftDrive   = null;
+
+    public DcMotor liftHex = null;
+
+    public DcMotor liftArm = null;
 //    public DcMotor linearSlider = null;
 
 //    public Servo tiltServo = null;
@@ -79,8 +83,11 @@ public class RobotHardware {
         frontRightDrive = hwMap.get(DcMotor.class, "motorfr");
         backLeftDrive  = hwMap.get(DcMotor.class, "motorbl");
         backRightDrive = hwMap.get(DcMotor.class, "motorbr");
+
         //linearSlider = hwMap.get(DcMotor.class, "motorls");
 
+        liftHex = hwMap.get(DcMotor.class, "liftHex");
+        liftArm = hwMap.get(DcMotor.class, "liftArm");
 
         // set Brake zero power behavior
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -93,6 +100,7 @@ public class RobotHardware {
         //grabServo = hwMap.get(Servo.class, "grabServo");
         //airplaneLauncher = hwMap.get(Servo.class, "launcher");
         //autoPixel = hwMap.get(Servo.class, "autoPixel");
+        //autoPixelBoard = hwMap.get(Servo.class, "boardPixel");
 
         // reverse motor directions
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
