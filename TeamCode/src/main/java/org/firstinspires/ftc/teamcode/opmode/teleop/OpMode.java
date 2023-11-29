@@ -17,7 +17,7 @@ public class OpMode extends LinearOpMode {
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
 
         robot.init(hardwareMap);
         // Put initialization blocks here.
@@ -31,19 +31,19 @@ public class OpMode extends LinearOpMode {
 
 
             //lift arm start
-            if(gamepad1.a) {
+            if(gamepad1.a) { //if button a pressed
                 //tilt
-                mRunTime.reset();
+                mRunTime.reset(); //timer reset
 
-                robot.liftHex.setPower(0.5);
+                robot.liftHex.setPower(-0.5); //set motor power
 
-                if (mRunTime.time() > 0.3 ){
-                    robot.liftHex.setPower(0);
+                if (mRunTime.time() > 0.3 ){ //if time over 0.3 sec
+                    robot.liftHex.setPower(-0.2); //set motor power
                 }
 
                 mRunTime.reset();
 
-                robot.liftArm.setPower(1.0);
+                robot.liftArm.setPower(0.5);
 
                 if (mRunTime.time() > 0.3 ){
                     robot.liftArm.setPower(0);
@@ -54,18 +54,15 @@ public class OpMode extends LinearOpMode {
             if (gamepad1.b) {
                 mRunTime.reset();
 
-                robot.liftArm.setPower(-1);
+                robot.liftArm.setPower(-0.5);
+                robot.liftHex.setPower(0.1);
+
 
                 if (mRunTime.time() > 0.3) {
                     robot.liftArm.setPower(0);
-                    robot.liftHex.setPower(0.5);
-
-                    mRunTime.reset();
-
-                    if (mRunTime.time() > 0.1) {
-                        robot.liftHex.setPower(0);
-                    }
+                    robot.liftHex.setPower(0);
                 }
+
             }
 
 
@@ -91,7 +88,21 @@ public class OpMode extends LinearOpMode {
 
 //airplane launcher
             if (gamepad2.a) {
-                robot.airplaneLauncher.setPosition(0.5); //works
+                //robot.airplane.setPower(1); //going up
+                Thread.sleep(2000);
+
+                mRunTime.reset();
+
+                robot.liftHex.setPower(0.1);
+
+                if (mRunTime.time() > 0.2){
+                    // robot.airplaneLauncher.setPosition(0.5);
+                }
+                //the reset
+                Thread.sleep(500);
+
+                robot.liftHex.setPower(0);
+                //robot.airplane.setPower(0);
             }
 
 

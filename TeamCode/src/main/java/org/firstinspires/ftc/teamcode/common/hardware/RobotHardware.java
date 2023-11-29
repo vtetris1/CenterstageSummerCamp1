@@ -51,6 +51,8 @@ public class RobotHardware {
     public DcMotor frontLeftDrive   = null;
     public DcMotor frontRightDrive   = null;
     public DcMotor backRightDrive   = null;
+
+//    public DcMotor airplane   = null;
     public DcMotor backLeftDrive   = null;
 
     public DcMotor liftHex = null;
@@ -83,7 +85,7 @@ public class RobotHardware {
         frontRightDrive = hwMap.get(DcMotor.class, "motorfr");
         backLeftDrive  = hwMap.get(DcMotor.class, "motorbl");
         backRightDrive = hwMap.get(DcMotor.class, "motorbr");
-
+        //airplane = hwMap.get(DcMotor.class, "motorap");
         //linearSlider = hwMap.get(DcMotor.class, "motorls");
 
         liftHex = hwMap.get(DcMotor.class, "liftHex");
@@ -174,13 +176,20 @@ public class RobotHardware {
 
 
 }
-/* port 0 ls
-   port 1 fl
-   port 2 bl
-   extension hub port 2 fr
-   extension hub port 3 br
-   launch 0 exttension hub
-   tilt 1 extention hub
-   grab 2 extention hub
-   create new expansion hub
+/* port 0 motorfl
+   port 1 motorbl
+   port 2 motorls not used yet
+   port 3 motorap not used yet
+   extension hub port 0 motorfr
+   extension hub port 1 motorbr
+   extension hub port 2 liftArm
+   extension hub port 3 liftHex
+
+   Servos
+   port 0 grabServo not used yet
+   port 1 tiltServo not used yet
+   port 2 boardPixel not used yet
+
+   extension hub port 0 autoPixel not used yet
+   extension hub port 1 launcher not used yet
  */
