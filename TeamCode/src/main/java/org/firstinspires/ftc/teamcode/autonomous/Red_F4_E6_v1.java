@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @Autonomous(name="Red_F4_E6_v1")
 public class Red_F4_E6_v1 extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
-    // Mobor encoder parameter
+    // Motor encoder parameter
     double ticksPerInch = 6.56;
     double ticksPerDegree = 5.0;
 
@@ -31,7 +31,7 @@ public class Red_F4_E6_v1 extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        int forwardTicks = 1050;
+        int forwardTicks = 1050; //210 degrees
         driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
                 false, robot.yaw0);
 
@@ -164,6 +164,79 @@ public class Red_F4_E6_v1 extends LinearOpMode {
                 if (powerR > 1.0)
                     powerR = 1.0;
                 robot.motorfl.setPower(powerL);
+                //robot.motorbl.setPower(powerL);
+                robot.motorfr.setPower(powerR);
+                robot.motorbl.setPower((powerR));
+                robot.motorbr.setPower(powerL);
+            }
+            idle();
+        }
+
+        robot.motorfl.setPower(0);
+        robot.motorbl.setPower(0);
+        robot.motorfr.setPower(0);
+        robot.motorbr.setPower(0);
+    }
+
+    private void driveStrafe(int flTarget, int blTarget, int frTarget, int brTarget,
+                             double power,
+                             boolean bKeepYaw, double targetYaw){
+        double currentYaw, diffYaw;
+        double powerDeltaPct, powerL, powerR;
+        int direction;
+
+        robot.motorfl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorbl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorfr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorbr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.motorfl.setTargetPosition(flTarget);
+        robot.motorbl.setTargetPosition(blTarget);
+        robot.motorfr.setTargetPosition(frTarget);
+        robot.motorbr.setTargetPosition(brTarget);
+
+        robot.motorfl.setPower(power);
+        robot.motorbl.setPower(power);
+        robot.motorfr.setPower(power);
+        robot.motorbr.setPower(power);
+
+        robot.motorfl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.motorbl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.motorfr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.motorbr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        // Defensive programming.
+        // Use bKeepYaw only when all targets are the same, meaning moving in a straight line
+        if (! ((flTarget == blTarget)
+                && (flTarget == frTarget)
+                && (flTarget == brTarget)) )
+            bKeepYaw = false;
+        direction = (flTarget > 0) ? 1 : -1;
+        while(opModeIsActive() &&
+                (robot.motorfl.isBusy() &&
+                        robot.motorbl.isBusy() &&
+                        robot.motorfr.isBusy() &&
+                        robot.motorbr.isBusy())){
+            if (bKeepYaw) {
+
+                currentYaw = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+                if (Math.abs(currentYaw - targetYaw) > 2.0)
+                    powerDeltaPct = 0.25;
+                else
+                    powerDeltaPct = Math.abs(currentYaw - targetYaw) / 2.0 * 0.25;
+                if (currentYaw < targetYaw) {
+                    powerL = power * (1 - direction * powerDeltaPct);
+                    powerR = power * (1 + direction * powerDeltaPct);
+                }
+                else {
+                    powerL = power * (1 + direction * powerDeltaPct);
+                    powerR = power * (1 - direction * powerDeltaPct);
+                }
+                if (powerL > 1.0)
+                    powerL = 1.0;
+                if (powerR > 1.0)
+                    powerR = 1.0;
+                robot.motorfl.setPower(powerL);
                 robot.motorbl.setPower(powerL);
                 robot.motorfr.setPower(powerR);
                 robot.motorbr.setPower(powerR);
@@ -219,9 +292,9 @@ public class Red_F4_E6_v1 extends LinearOpMode {
 
     private void deployPreloadedPixel1(int timeIntervalMs) {
         // Deploy preloaded pixel 1
-        robot.preloader1.setPosition(1.0);
+        robot.autoPixel.setPosition(1.0);
         sleep(timeIntervalMs);
-        robot.preloader1.setPosition(0.5);
+        robot.autoPixel.setPosition(0.5);
         sleep(timeIntervalMs);
 
     }

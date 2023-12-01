@@ -35,9 +35,9 @@ public class Auto extends LinearOpMode {
             telemetry.update();
 
             if (robot.distanceR.getDistance(DistanceUnit.INCH) < 48) {
-                robot.preloader1.setPosition(1.0);
+                //robot.preloader1.setPosition(1.0);
                 sleep(1000);
-                robot.preloader1.setPosition(0.5);
+                //robot.preloader1.setPosition(0.5);
                 sleep(1000);
                 requestOpModeStop();
             }

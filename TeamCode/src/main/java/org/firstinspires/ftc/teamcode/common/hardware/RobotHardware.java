@@ -58,22 +58,21 @@ public class RobotHardware {
     public DcMotor liftArm = null;
 
     public DcMotor launcher = null;
-    public Servo feeder = null;
-    public Servo preloader1 = null;
-    public Servo preloader2 = null;
-    public Servo grabber = null;
-    public Servo tilt = null;
+
+    public DcMotor linearSlider = null;
+
 
     public DistanceSensor distanceR = null;
     public DistanceSensor distanceL = null;
 
-//    public DcMotor linearSlider = null;
 
-//    public Servo tiltServo = null;
-//    public Servo grabServo = null;
+    public Servo tiltServo = null;
+    public Servo grabServo = null;
 
-//    public Servo airplaneLauncher = null;
-//    public Servo autoPixel = null;
+    public Servo airplaneFeeder = null;
+    public Servo autoPixel = null;
+
+    public Servo boardPixel = null;
     public IMU imu;
 
     // Initial robot orientation
@@ -100,7 +99,7 @@ public class RobotHardware {
         motorbl = hwMap.get(DcMotor.class, "motorbl");
         motorbr = hwMap.get(DcMotor.class, "motorbr");
         launcher = hwMap.get(DcMotor.class, "launcher");
-        //linearSlider = hwMap.get(DcMotor.class, "motorls");
+        linearSlider = hwMap.get(DcMotor.class, "motorls");
 
         liftHex = hwMap.get(DcMotor.class, "liftHex");
         liftArm = hwMap.get(DcMotor.class, "liftArm");
@@ -112,14 +111,12 @@ public class RobotHardware {
         motorbl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Define and initialize ALL installed servos.
-        feeder = hwMap.get(Servo.class, "feeder");
-        feeder.setPosition(0.5);
-        preloader1 = hwMap.get(Servo.class, "preloader1");
-        preloader1.setPosition(0.5);
 
-        //grabServo = hwMap.get(Servo.class, "grabServo");
-        //autoPixel = hwMap.get(Servo.class, "autoPixel");
-        //autoPixelBoard = hwMap.get(Servo.class, "boardPixel");
+        airplaneFeeder = hwMap.get(Servo.class, "feeder");
+        tiltServo = hwMap.get(Servo.class, "tiltServo");
+        grabServo = hwMap.get(Servo.class, "grabServo");
+        autoPixel = hwMap.get(Servo.class, "autoPixel");
+        boardPixel = hwMap.get(Servo.class, "boardPixel");
 
         // Get distance sensors
         distanceR = hwMap.get(DistanceSensor.class, "distanceR");
@@ -208,7 +205,7 @@ public class RobotHardware {
     }
     public void setAllDrivePower(double p){ setDrivePower(p,p,p,p);}
     public void setArmPower(double armPower){
-        //linearSlider.setPower(armPower);
+        linearSlider.setPower(armPower);
     }
 
 
@@ -219,18 +216,23 @@ public class RobotHardware {
 }
 /* port 0 motorfl
    port 1 motorbl
-   port 2 motorls not used yet
-   port 3 motorap not used yet
+   port 2 motorls
+   port 3 motorap
    extension hub port 0 motorfr
    extension hub port 1 motorbr
    extension hub port 2 liftArm
    extension hub port 3 liftHex
 
    Servos
-   port 0 grabServo not used yet
-   port 1 tiltServo not used yet
-   port 2 boardPixel not used yet
+   port 0 boardPixel
+   port 1 grabServo
+   port 2 tiltServo
 
-   extension hub port 0 autoPixel not used yet
-   extension hub port 1 launcher not used yet
- */
+   extension hub port 0 autoPixel
+   extension hub port 1 feeder
+
+
+   //Controls//
+   Gamepad 1:
+
+     */
