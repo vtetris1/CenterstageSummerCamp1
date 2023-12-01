@@ -12,27 +12,36 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 //ignore this for now
 @Autonomous(name="Auto")
 public class Auto extends LinearOpMode {
+    RobotHardware robot = new RobotHardware();
 
     @Override
     public void runOpMode() throws InterruptedException {
-        RobotHardware robot = new RobotHardware();
+        robot.init(hardwareMap);
 
-//reset encoder
-        robot.backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.backLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.frontLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //reset encoder
+        robot.setAutoDriveMotorMode();
 
-        robot.backRightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.frontRightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        waitForStart();
+        while (opModeIsActive()) {
+            telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\n",
+                    robot.distanceR.getDistance(DistanceUnit.INCH),
+                    robot.distanceL.getDistance(DistanceUnit.INCH)));
+            telemetry.update();
 
+            if (robot.distanceR.getDistance(DistanceUnit.INCH) < 48) {
+                robot.preloader1.setPosition(1.0);
+                sleep(1000);
+                robot.preloader1.setPosition(0.5);
+                sleep(1000);
+                requestOpModeStop();
+            }
+        }
     }
 
 

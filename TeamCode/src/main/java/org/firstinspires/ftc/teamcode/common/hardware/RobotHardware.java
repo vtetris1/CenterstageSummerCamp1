@@ -28,19 +28,18 @@
  */
 
 package org.firstinspires.ftc.teamcode.common.hardware;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-
+import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
-
 
 public class RobotHardware {
 
@@ -48,16 +47,26 @@ public class RobotHardware {
     HardwareMap hwMap =  null;
 
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
-    public DcMotor frontLeftDrive   = null;
-    public DcMotor frontRightDrive   = null;
-    public DcMotor backRightDrive   = null;
+    public DcMotor motorfl = null;
+    public DcMotor motorfr = null;
+    public DcMotor motorbr = null;
 
-//    public DcMotor airplane   = null;
-    public DcMotor backLeftDrive   = null;
+    public DcMotor motorbl = null;
 
     public DcMotor liftHex = null;
 
     public DcMotor liftArm = null;
+
+    public DcMotor launcher = null;
+    public Servo feeder = null;
+    public Servo preloader1 = null;
+    public Servo preloader2 = null;
+    public Servo grabber = null;
+    public Servo tilt = null;
+
+    public DistanceSensor distanceR = null;
+    public DistanceSensor distanceL = null;
+
 //    public DcMotor linearSlider = null;
 
 //    public Servo tiltServo = null;
@@ -65,7 +74,12 @@ public class RobotHardware {
 
 //    public Servo airplaneLauncher = null;
 //    public Servo autoPixel = null;
-    BNO055IMU imu;
+    public IMU imu;
+
+    // Initial robot orientation
+    public YawPitchRollAngles orientation0;
+    public AngularVelocity angularVelocity0;
+    public double yaw0;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public RobotHardware() {}
@@ -81,57 +95,84 @@ public class RobotHardware {
         hwMap = ahwMap;
 
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
-        frontLeftDrive  = hwMap.get(DcMotor.class, "motorfl");
-        frontRightDrive = hwMap.get(DcMotor.class, "motorfr");
-        backLeftDrive  = hwMap.get(DcMotor.class, "motorbl");
-        backRightDrive = hwMap.get(DcMotor.class, "motorbr");
-        //airplane = hwMap.get(DcMotor.class, "motorap");
+        motorfl = hwMap.get(DcMotor.class, "motorfl");
+        motorfr = hwMap.get(DcMotor.class, "motorfr");
+        motorbl = hwMap.get(DcMotor.class, "motorbl");
+        motorbr = hwMap.get(DcMotor.class, "motorbr");
+        launcher = hwMap.get(DcMotor.class, "launcher");
         //linearSlider = hwMap.get(DcMotor.class, "motorls");
 
         liftHex = hwMap.get(DcMotor.class, "liftHex");
         liftArm = hwMap.get(DcMotor.class, "liftArm");
 
         // set Brake zero power behavior
-        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorfr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorfl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorbr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorbl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Define and initialize ALL installed servos.
-        //tiltServo = hwMap.get(Servo.class, "tiltServo");
+        feeder = hwMap.get(Servo.class, "feeder");
+        feeder.setPosition(0.5);
+        preloader1 = hwMap.get(Servo.class, "preloader1");
+        preloader1.setPosition(0.5);
+
         //grabServo = hwMap.get(Servo.class, "grabServo");
-        //airplaneLauncher = hwMap.get(Servo.class, "launcher");
         //autoPixel = hwMap.get(Servo.class, "autoPixel");
         //autoPixelBoard = hwMap.get(Servo.class, "boardPixel");
 
+        // Get distance sensors
+        distanceR = hwMap.get(DistanceSensor.class, "distanceR");
+        distanceL = hwMap.get(DistanceSensor.class, "distanceL");
+
+
         // reverse motor directions
-        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-
-
+        motorbl.setDirection(DcMotor.Direction.REVERSE);
 
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         setDrivetrainMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
-        // imu parameters
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.calibrationDataFile = "BNO0155IMUCalibration.json";
-        parameters.loggingEnabled = true;
-        parameters.loggingTag = "IMU";
-        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+        // Initialize IMU in the control hub
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
+        RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
+        imu = hwMap.get(IMU.class, "imu");
+        imu.initialize(new IMU.Parameters(orientationOnRobot));
+        imu.resetYaw();
 
-        imu = hwMap.get(BNO055IMU.class,"imu");
-        imu.initialize(parameters);
-
-
+        // Retrieve the very initial Rotational Angles and Velocities
+        orientation0 = imu.getRobotYawPitchRollAngles();
+        angularVelocity0 = imu.getRobotAngularVelocity(AngleUnit.DEGREES);
+        yaw0 = orientation0.getYaw(AngleUnit.DEGREES);
     }
+
+    public void setAutoDriveMotorMode() {
+        motorbr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorbl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorfr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorfl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        motorbr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorbl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorfr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorfl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        motorfr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorfl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorbr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorbl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+    public double getCurrentYaw() {
+        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+    }
+
     public void setDrivetrainMode(DcMotor.RunMode mode) {
-        frontLeftDrive.setMode(mode);
-        frontRightDrive.setMode(mode);
-        backLeftDrive.setMode(mode);
-        backRightDrive.setMode(mode);
+        motorfl.setMode(mode);
+        motorfr.setMode(mode);
+        motorbl.setMode(mode);
+        motorbr.setMode(mode);
     }
     public void setArmsMode(DcMotor.RunMode mode) {
         //linearSlider.setMode(mode);
@@ -159,10 +200,10 @@ public class RobotHardware {
         else if (br < -1.0)
             br = -1.0;
 
-        frontLeftDrive.setPower(fl);
-        frontRightDrive.setPower(fr);
-        backLeftDrive.setPower(bl);
-        backRightDrive.setPower(br); //had to manually reverse (the -1 reversed it) (Line:93)
+        motorfl.setPower(fl);
+        motorfr.setPower(fr);
+        motorbl.setPower(bl);
+        motorbr.setPower(br); //had to manually reverse (the -1 reversed it) (Line:93)
 
     }
     public void setAllDrivePower(double p){ setDrivePower(p,p,p,p);}

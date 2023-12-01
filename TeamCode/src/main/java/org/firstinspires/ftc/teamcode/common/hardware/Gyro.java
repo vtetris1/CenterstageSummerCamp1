@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -24,7 +24,7 @@ public class Gyro extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     // imu variables
-    private Orientation lastAngles = new Orientation();
+    private YawPitchRollAngles lastAngles;
     private double currAngle = 0.0;
 
 
@@ -48,14 +48,14 @@ public class Gyro extends LinearOpMode {
 
     }
     public void resetAngle(){
-        lastAngles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        lastAngles = robot.imu.getRobotYawPitchRollAngles();
         currAngle = 0;
     }
 
     public double getAngle(){
-        Orientation orientation = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        YawPitchRollAngles orientation = robot.imu.getRobotYawPitchRollAngles();
 
-        double deltaAngle = orientation.firstAngle - lastAngles.firstAngle;
+        double deltaAngle = orientation.getYaw(AngleUnit.DEGREES) - lastAngles.getYaw(AngleUnit.DEGREES);
 
         if (deltaAngle>180){
             deltaAngle -= 360;
@@ -67,7 +67,7 @@ public class Gyro extends LinearOpMode {
         currAngle+=deltaAngle;
         lastAngles = orientation;
 
-        telemetry.addData("gyro", orientation.firstAngle);
+        telemetry.addData("gyro", orientation.getYaw(AngleUnit.DEGREES));
         return currAngle;
     }
     public void turn(double degrees){
@@ -87,9 +87,9 @@ public class Gyro extends LinearOpMode {
         robot.setAllDrivePower(0);
     }
     public void turnTo(double degrees){
-        Orientation orientation = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        YawPitchRollAngles orientation = robot.imu.getRobotYawPitchRollAngles();
 
-        double error = degrees - orientation.firstAngle;
+        double error = degrees - orientation.getYaw(AngleUnit.DEGREES);
 
         if (error > 180){
             error -= 360;
@@ -98,13 +98,13 @@ public class Gyro extends LinearOpMode {
             error += 360;
         }
         while (opModeIsActive() && Math.abs(error)>10){
-            Orientation currOrientation = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            YawPitchRollAngles currOrientation = robot.imu.getRobotYawPitchRollAngles();
 
             double motorPower = (error < 0 ? -0.35 : 0.35);
             robot.setDrivePower(-motorPower, motorPower, -motorPower, motorPower);
-            error = degrees - currOrientation.firstAngle;
-            telemetry.addData("Orientation: ",currOrientation.firstAngle);
-            telemetry.addData("Error: ",Math.abs(error));
+            error = degrees - currOrientation.getYaw(AngleUnit.DEGREES);
+            telemetry.addData("Orientation: ",currOrientation.getYaw(AngleUnit.DEGREES));
+            telemetry.addData("Error: ", Math.abs(error));
 
             telemetry.update();
 
