@@ -1,21 +1,21 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 //test
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.IMU;
-import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 //ignore this for now
-@Autonomous(name="Red_F4_E6_v1")
-public class Red_F4_E6_v1 extends LinearOpMode {
+@Autonomous(name="Red_Near_v0_F4_D6")
+public class Red_Near_v0_F4_D6 extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
     // Motor encoder parameter
-    double ticksPerInch = 6.56;
-    double ticksPerDegree = 5.0;
+    double ticksPerInch = 31.3;
+    double ticksPerDegree = 15.6;
 
 
     @Override
@@ -31,78 +31,52 @@ public class Red_F4_E6_v1 extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        int forwardTicks = 1050; //210 degrees
+        int forwardTicks = 1000;
+        driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        false, robot.yaw0);
+
+        int sideTicks = 900;
+        // 1&4: value, 2&3: -value
+        driveMotors((int)(sideTicks*1.5), -sideTicks, -sideTicks, sideTicks, 0.6,
+                false, robot.yaw0);
+        // Adjust to facing straight position
+        turnToTargetYaw(robot.yaw0, 0.6, 2000);
+
+        // Move forward to touch the board
+        forwardTicks = 400;
         driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
                 false, robot.yaw0);
 
-
-        telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\n",
-                robot.distanceR.getDistance(DistanceUnit.INCH),
-                robot.distanceL.getDistance(DistanceUnit.INCH)));
-        telemetry.update();
-        double distThreshold = 10.0;
-        int spikeMode = 2;
-        int ticks = 0;
-
-
-
-        if (robot.distanceL.getDistance(DistanceUnit.INCH) < distThreshold) {
-            spikeMode = 1;
-            // Spike 1
-            // back ~3 inches
-            ticks = 200;
-            requestOpModeStop();
-
-            driveMotors(ticks, ticks, ticks, ticks, -0.6,
-                    false, robot.yaw0);
-            requestOpModeStop();
-
-            // Turn left 90 degree
-            turnToTargetYaw(robot.yaw0+90, 0.6, 3000);
-
-            // Release preloaded pixel 1
-            deployPreloadedPixel1(800);
-            // Turn right 180 degree
-            turnToTargetYaw(robot.yaw0-90, 0.8, 1000);
-
-            // Move forward distance ~48 inches
-
-
-        }
-        else if (robot.distanceR.getDistance(DistanceUnit.INCH) < distThreshold){
-            spikeMode = 3;
-
-            // back about 6 inches
-
-            // move right for about 5 inches
-
-            // release preloaded pixel 1
-
-            // turn right 90 degree
-
-            // move forward
-
-            // move left
-
-            // orient
-
-        }
-        else {
-            spikeMode = 2;
-            // do nothing.
-
-
-        }
-
-        // Deploy preloaded pixel 1
-        /*
-        robot.preloader1.setPosition(1.0);
+        // Put board pixel - 5 points or 20 points if on the backdrop
+        robot.boardPixel.setPosition(1.0);
         sleep(1000);
-        robot.preloader1.setPosition(0.5);
+        robot.boardPixel.setPosition(0);
         sleep(1000);
-        requestOpModeStop();
 
-             */
+        // Move back a few inches
+        int backTicks = -200;
+        driveMotors(backTicks, backTicks, backTicks, backTicks, 0.6,
+                false, robot.yaw0);
+
+        // Release auto pixel - 3 points
+        robot.autoPixel.setPosition(1.0);
+        sleep(1000);
+        robot.autoPixel.setPosition(0.5);
+        sleep(1000);
+
+        // Move side to D6 to leave room for alliance partner
+        sideTicks = 800;
+        // 1&4: value, 2&3: -value
+        driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, sideTicks, 0.6,
+                false, robot.yaw0);
+
+        while(opModeIsActive()) {
+            telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\nCurrent Yaw: %.1f",
+                    robot.distanceR.getDistance(DistanceUnit.INCH),
+                    robot.distanceL.getDistance(DistanceUnit.INCH),
+                    robot.getCurrentYaw()));
+            telemetry.update();
+        }
     }
 
     private void driveMotors(int flTarget, int blTarget, int frTarget, int brTarget,
@@ -164,10 +138,9 @@ public class Red_F4_E6_v1 extends LinearOpMode {
                 if (powerR > 1.0)
                     powerR = 1.0;
                 robot.motorfl.setPower(powerL);
-                //robot.motorbl.setPower(powerL);
+                robot.motorbl.setPower(powerL);
                 robot.motorfr.setPower(powerR);
-                robot.motorbl.setPower((powerR));
-                robot.motorbr.setPower(powerL);
+                robot.motorbr.setPower(powerR);
             }
             idle();
         }
@@ -250,6 +223,7 @@ public class Red_F4_E6_v1 extends LinearOpMode {
         robot.motorbr.setPower(0);
     }
 
+
     private void turnToTargetYaw(double targetYawDegree, double power, long maxAllowedTimeInMills){
         long timeBegin, timeCurrent;
         double currentYaw = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);;
@@ -265,8 +239,9 @@ public class Red_F4_E6_v1 extends LinearOpMode {
                 && opModeIsActive()
                 && ((timeCurrent-timeBegin) < maxAllowedTimeInMills)) {
             ticks = (int) (diffYaw * ticksPerDegree);
-            if (ticks > 50)
-                ticks = 50;
+            if (ticks > 200)
+                ticks = 200;
+
             tickDirection = (currentYaw < targetYawDegree) ? -1 : 1;
             if (ticks < 1)
                 break;

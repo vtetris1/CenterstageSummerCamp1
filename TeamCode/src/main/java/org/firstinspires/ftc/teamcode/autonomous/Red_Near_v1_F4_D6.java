@@ -1,23 +1,23 @@
 package org.firstinspires.ftc.teamcode.autonomous;
-//good rn
-
+//test
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
 //ignore this for now
-@Autonomous(name="Red_F2_F6_v0")
-public class Red_F2_F6_v1 extends LinearOpMode {
+@Autonomous(name="Red_Near_v1_F4_D6")
+@Disabled
+public class Red_Near_v1_F4_D6 extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
     // Motor encoder parameter
     double ticksPerInch = 6.56;
     double ticksPerDegree = 5.0;
-    // about 24 inch tile
-    //8.75 inch per degree????
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -26,22 +26,26 @@ public class Red_F2_F6_v1 extends LinearOpMode {
         //reset encoder
         robot.setAutoDriveMotorMode();
 
-        telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\n",
+        telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\nyaw0: %.1f",
                 robot.distanceR.getDistance(DistanceUnit.INCH),
-                robot.distanceL.getDistance(DistanceUnit.INCH)));
+                robot.distanceL.getDistance(DistanceUnit.INCH),
+                robot.yaw0));
         telemetry.update();
         waitForStart();
 
-        int forwardTicks = 3150; //210 degrees
+        int forwardTicks = 4000; // default 1050
         driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
-                false, robot.yaw0);
+                true, robot.yaw0);
 
+        while(opModeIsActive()) {
+            telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\nCurrent Yaw: %.1f",
+                    robot.distanceR.getDistance(DistanceUnit.INCH),
+                    robot.distanceL.getDistance(DistanceUnit.INCH),
+                    robot.getCurrentYaw()));
+            telemetry.update();
+        }
 
-        telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\n",
-                robot.distanceR.getDistance(DistanceUnit.INCH),
-                robot.distanceL.getDistance(DistanceUnit.INCH)));
-        telemetry.update();
-        double distThreshold = 30.0;
+        double distThreshold = 10.0;
         int spikeMode = 2;
         int ticks = 0;
 
@@ -111,6 +115,7 @@ public class Red_F2_F6_v1 extends LinearOpMode {
                              boolean bKeepYaw, double targetYaw){
         double currentYaw, diffYaw;
         double powerDeltaPct, powerL, powerR;
+        double powerLeftPctToCounterCOG = 1.00;
         int direction;
 
         robot.motorfl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -118,8 +123,14 @@ public class Red_F2_F6_v1 extends LinearOpMode {
         robot.motorfr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.motorbr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.motorfl.setTargetPosition(flTarget);
-        robot.motorbl.setTargetPosition(blTarget);
+        // set Brake zero power behavior
+        robot.motorfr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.motorfl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.motorbr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.motorbl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        robot.motorfl.setTargetPosition((int)(flTarget * powerLeftPctToCounterCOG));
+        robot.motorbl.setTargetPosition((int)(blTarget * powerLeftPctToCounterCOG));
         robot.motorfr.setTargetPosition(frTarget);
         robot.motorbr.setTargetPosition(brTarget);
 
@@ -140,13 +151,21 @@ public class Red_F2_F6_v1 extends LinearOpMode {
                 && (flTarget == brTarget)) )
             bKeepYaw = false;
         direction = (flTarget > 0) ? 1 : -1;
+
         while(opModeIsActive() &&
                 (robot.motorfl.isBusy() &&
                         robot.motorbl.isBusy() &&
                         robot.motorfr.isBusy() &&
                         robot.motorbr.isBusy())){
-            if (bKeepYaw) {
+        /*
+        while(opModeIsActive() &&
+                (robot.motorfl.isBusy() ||
+                        robot.motorbl.isBusy() ||
+                        robot.motorfr.isBusy() ||
+                        robot.motorbr.isBusy())){
 
+         */
+            if (bKeepYaw) {
                 currentYaw = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
                 if (Math.abs(currentYaw - targetYaw) > 2.0)
                     powerDeltaPct = 0.25;
@@ -160,6 +179,8 @@ public class Red_F2_F6_v1 extends LinearOpMode {
                     powerL = power * (1 + direction * powerDeltaPct);
                     powerR = power * (1 - direction * powerDeltaPct);
                 }
+                // Counter right sided COG by reducing power on the left.
+                powerL *= powerLeftPctToCounterCOG;
                 if (powerL > 1.0)
                     powerL = 1.0;
                 if (powerR > 1.0)
@@ -249,7 +270,6 @@ public class Red_F2_F6_v1 extends LinearOpMode {
         robot.motorfr.setPower(0);
         robot.motorbr.setPower(0);
     }
-
 
     private void turnToTargetYaw(double targetYawDegree, double power, long maxAllowedTimeInMills){
         long timeBegin, timeCurrent;

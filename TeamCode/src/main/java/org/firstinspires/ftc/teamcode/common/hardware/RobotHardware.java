@@ -117,6 +117,8 @@ public class RobotHardware {
         grabServo = hwMap.get(Servo.class, "grabServo");
         autoPixel = hwMap.get(Servo.class, "autoPixel");
         boardPixel = hwMap.get(Servo.class, "boardPixel");
+        autoPixel.setPosition(0.5);
+        boardPixel.setPosition(0);
 
         // Get distance sensors
         distanceR = hwMap.get(DistanceSensor.class, "distanceR");
@@ -145,15 +147,15 @@ public class RobotHardware {
     }
 
     public void setAutoDriveMotorMode() {
-        motorbr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorbl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorfr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorfl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorbr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorbl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        motorbr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorbl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorfr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorfl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorbr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorbl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         motorfr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorfl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
