@@ -117,8 +117,8 @@ public class RobotHardware {
         grabServo = hwMap.get(Servo.class, "grabServo");
         autoPixel = hwMap.get(Servo.class, "autoPixel");
         boardPixel = hwMap.get(Servo.class, "boardPixel");
-        autoPixel.setPosition(0.5);
-        boardPixel.setPosition(0);
+        //autoPixel.setPosition(0.5);
+        //boardPixel.setPosition(0);
 
         // Get distance sensors
         distanceR = hwMap.get(DistanceSensor.class, "distanceR");

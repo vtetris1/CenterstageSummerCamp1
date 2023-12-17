@@ -10,8 +10,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
 //ignore this for now
-@Autonomous(name="Red_Far_v0_F2_E6")
-public class Red_Far_v0_F2_E6 extends LinearOpMode {
+@Autonomous(name="Red_Far_v1_F2_E6")
+public class Red_Far_v1_F2_E6 extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
     // Motor encoder parameter
     double ticksPerInch = 31.3;
@@ -31,69 +31,93 @@ public class Red_Far_v0_F2_E6 extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        // Move away from the wall
-        int sideTicks = 170;
-        // 1&4: value, 2&3: -value
-        driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.3,
-                false, robot.yaw0);
-        // Adjust to facing straight position
-        turnToTargetYaw(robot.yaw0, 0.3, 2000);
+        if (opModeIsActive()) {
+            telemetry.update();
 
-        int forwardTicks = 3600;
-        driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+            int forwardTicks = 875;
+            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                    true, robot.yaw0);
+            sleep(1000);
+
+            if (robot.distanceL.getDistance(DistanceUnit.INCH) < 10) {
+
+                forwardTicks = 130;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                         true, robot.yaw0);
 
-        // Move further away from the wall and turn 90 degree and them move forward
-        // Move away from the wall
-        sideTicks = 200;
-        // 1&4: value, 2&3: -value
-        driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.3,
-                false, robot.yaw0);
 
-        // Adjust to facing straight position
-        turnToTargetYaw(90+robot.yaw0, 0.4, 5000);
+                turnToTargetYaw(90 + robot.yaw0, 0.4, 6500);
 
-        // Move forward
-        forwardTicks = 400;
-        driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
-                true, 90+robot.yaw0);
-        // Adjust to facing straight position
-        turnToTargetYaw(robot.yaw0, 0.4, 5000);
 
-        // Move forward to touch the board
-        forwardTicks = 700;
-        driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
-                true, robot.yaw0);
+                robot.autoPixel.setPosition(0.0);
+                sleep(100);
+                //requestOpModeStop();
+            }
+            else if (robot.distanceR.getDistance(DistanceUnit.INCH) < 10) {
+                forwardTicks = 85;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
 
-        // Put board pixel - 5 points or 20 points if on the backdrop
-        robot.boardPixel.setPosition(1.0);
-        sleep(1000);
-        robot.boardPixel.setPosition(0);
-        sleep(1000);
+                sleep(100);
 
-        // Move back a few inches
-        int backTicks = -200;
-        driveMotors(backTicks, backTicks, backTicks, backTicks, 0.6,
-                false, robot.yaw0);
+                turnToTargetYaw(-60 + robot.yaw0, 0.4, 6000);
 
-        // Release auto pixel - 3 points
-        robot.autoPixel.setPosition(1.0);
-        sleep(1000);
-        robot.autoPixel.setPosition(0.5);
-        sleep(1000);
+                sleep(100);
 
-        // Move side to be away from the pixel
-        sideTicks = -200;
-        // 1&4: value, 2&3: -value
-        driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.6,
-                false, robot.yaw0);
+                forwardTicks = 85;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
 
-        while(opModeIsActive()) {
-            telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\nCurrent Yaw: %.1f",
-                    robot.distanceR.getDistance(DistanceUnit.INCH),
-                    robot.distanceL.getDistance(DistanceUnit.INCH),
-                    robot.getCurrentYaw()));
-            telemetry.update();
+                sleep(100);
+
+                robot.autoPixel.setPosition(0.0);
+                sleep(1000);
+
+                forwardTicks = -100;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+                sleep(1000);
+
+                turnToTargetYaw(-90 + robot.yaw0, 0.4, 2000);
+
+                sleep(100);
+
+                int sideTicks = -200;
+                // 1&4: value, 2&3: -value
+                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.3,
+                        false, robot.yaw0);
+
+                sleep(100);
+
+                forwardTicks = 3000;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+                sleep(100);
+
+                robot.boardPixel.setPosition(1);
+                //requestOpModeStop();
+
+
+
+            } else {
+                forwardTicks = 100;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+
+                robot.autoPixel.setPosition(0.0);
+            }
+
+
+            while (opModeIsActive()) {
+                telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\nCurrent Yaw: %.1f",
+                        robot.distanceR.getDistance(DistanceUnit.INCH),
+                        robot.distanceL.getDistance(DistanceUnit.INCH),
+                        robot.getCurrentYaw()));
+                telemetry.update();
+            }
         }
     }
 

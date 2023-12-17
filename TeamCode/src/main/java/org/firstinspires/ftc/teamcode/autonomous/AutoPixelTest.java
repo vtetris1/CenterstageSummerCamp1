@@ -20,22 +20,69 @@ public class AutoPixelTest extends LinearOpMode {
 
         robot.init(hardwareMap);
 
+
+
+
         waitForStart();
+//only works on blue side right now
+//red version in Red_Far_v1_F2_E6
 
         if (opModeIsActive()) {
             telemetry.update();
 
-            int forwardTicks = 925;
+            int forwardTicks = 875;
             driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                     true, robot.yaw0);
             sleep(1000);
 
-
             if (robot.distanceR.getDistance(DistanceUnit.INCH) < 10) {
-                robot.autoPixel.setPosition(0.9);
+
+                forwardTicks = 200;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+
+                turnToTargetYaw(-90+robot.yaw0, 0.4, 6500);
+
+
+                robot.autoPixel.setPosition(0.0);
                 sleep(1000);
                 //requestOpModeStop();
             }
+
+            else if (robot.distanceL.getDistance(DistanceUnit.INCH) < 10) {
+                forwardTicks = 110;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+                sleep(100);
+
+                turnToTargetYaw(90+robot.yaw0, 0.4, 6000);
+
+                sleep(100);
+
+                forwardTicks = 100;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+                robot.autoPixel.setPosition(0.0);
+                sleep(1000);
+                //requestOpModeStop();
+
+            }
+
+            else {
+                forwardTicks = 100;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+
+                robot.autoPixel.setPosition(0.0);
+            }
+
+
+
+
         }
         while (opModeIsActive()) {
             telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\n",
@@ -116,5 +163,49 @@ public class AutoPixelTest extends LinearOpMode {
         robot.motorbl.setPower(0);
         robot.motorfr.setPower(0);
         robot.motorbr.setPower(0);
+
+    }
+
+    private void turnToTargetYaw(double targetYawDegree, double power, long maxAllowedTimeInMills){
+        long timeBegin, timeCurrent;
+        double currentYaw = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);;
+        int ticks, tickDirection;
+        double factor = 1.0;
+        double ticksPerDegree = 15.6;
+
+        double diffYaw = Math.abs(currentYaw - targetYawDegree);
+        telemetry.addLine(String.format("\nCurrentYaw=%.2f\nTargetYaw=%.2f", currentYaw, targetYawDegree));
+        telemetry.update();
+
+        timeBegin = timeCurrent = System.currentTimeMillis();
+        while (diffYaw > 0.5
+                && opModeIsActive()
+                && ((timeCurrent-timeBegin) < maxAllowedTimeInMills)) {
+            ticks = (int) (diffYaw * ticksPerDegree);
+            if (ticks > 85)
+                ticks = 85;
+
+            tickDirection = (currentYaw < targetYawDegree) ? -1 : 1;
+            if (ticks < 1)
+                break;
+            if (diffYaw > 3)
+                factor = 1.0;
+            else
+                factor = diffYaw / 3;
+            driveMotors(
+                    (int)(tickDirection * ticks),
+                    (int)(tickDirection * ticks),
+                    -(int)(tickDirection * ticks),
+                    -(int)(tickDirection * ticks),
+                    power * factor, false, 0);
+            currentYaw = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+            timeCurrent = System.currentTimeMillis();
+            diffYaw = Math.abs(currentYaw - targetYawDegree);
+
+            telemetry.addLine(String.format("\nCurrentYaw=%.2f\nTargetYaw=%.2f\nTimeLapsed=%.2f ms",
+                    currentYaw, targetYawDegree, (double)(timeCurrent-timeBegin)));
+            telemetry.update();
+        }
     }
 }
+
