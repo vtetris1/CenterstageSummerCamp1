@@ -10,8 +10,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
 //ignore this for now
-@Autonomous(name="Red_Far_v1_F2_E6")
-public class Red_Far_v1_F2_E6 extends LinearOpMode {
+@Autonomous(name="Blue_Far_v1_A2_B6")
+public class Blue_Far_v1_A2_B6 extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
     // Motor encoder parameter
     double ticksPerInch = 31.3;
@@ -34,138 +34,95 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
         if (opModeIsActive()) {
             telemetry.update();
 
-            int forwardTicks = 1100;
-            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.2,
+            int forwardTicks = 875;
+            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                     true, robot.yaw0);
             sleep(1000);
 
-            if (robot.distanceL.getDistance(DistanceUnit.INCH) < 10) {
+            if (robot.distanceR.getDistance(DistanceUnit.INCH) < 10) {
+
+                forwardTicks = 200;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+
+                turnToTargetYaw(-90 + robot.yaw0, 0.4, 6500);
+
+
+                robot.autoPixel.setPosition(0.0);
+                sleep(1000);
+
+                turnToTargetYaw(90 + robot.yaw0, 0.4, 8000);
+
+                forwardTicks = 3000;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+                sleep(100);
+
+                robot.boardPixel.setPosition(1.0);
+
+                robot.boardPixel.setPosition(0.0);
+
+
+                //requestOpModeStop();
+            } else if (robot.distanceL.getDistance(DistanceUnit.INCH) < 10) {
+                forwardTicks = 110;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+                sleep(100);
+
+                turnToTargetYaw(90 + robot.yaw0, 0.4, 6000);
+
+                sleep(100);
 
                 forwardTicks = 100;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                         true, robot.yaw0);
 
+                robot.autoPixel.setPosition(0.0);
+                sleep(1000);
+
+                forwardTicks = 3000;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
                 sleep(100);
+
+                robot.boardPixel.setPosition(1.0);
+
+                robot.boardPixel.setPosition(0.0);
+
+                //requestOpModeStop();
+
+            } else {
+                forwardTicks = 100;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+
+                robot.autoPixel.setPosition(0.0);
+
+                sleep(1000);
+
+                forwardTicks = -500;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
 
                 turnToTargetYaw(90 + robot.yaw0, 0.4, 6500);
 
-                sleep(100);
-
-                forwardTicks = -200;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
-                        true, robot.yaw0);
-
-                sleep(500);
-
-                robot.autoPixel.setPosition(0.0);
-
-                sleep(350);
-
-                turnToTargetYaw(-90 + robot.yaw0, 0.4, 8000);
-
-                sleep(100);
-
-                int sideTicks = 600;
-                // 1&4: value, 2&3: -value
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.3,
-                        true, robot.yaw0);
-
-                sleep(100);
-
-                forwardTicks = 5000;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
-                        true, robot.yaw0);
-
-                //sleep(100);
-
-                robot.boardPixel.setPosition(0.0);
-
-                robot.boardPixel.setPosition(1.0);
-
-                //requestOpModeStop();
-            }
-            else if (robot.distanceR.getDistance(DistanceUnit.INCH) < 10) {
-                forwardTicks = 85;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
-                        true, robot.yaw0);
-
-                sleep(100);
-
-                turnToTargetYaw(-60 + robot.yaw0, 0.4, 6000);
-
-                sleep(100);
-
-                forwardTicks = 85;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
-                        true, robot.yaw0);
-
-                sleep(100);
-
-                robot.autoPixel.setPosition(0.0);
-                sleep(1000);
-
-                forwardTicks = -200;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
-                        true, robot.yaw0);
-
-                sleep(1000);
-
-                turnToTargetYaw(-90 + robot.yaw0, 0.4, 2000);
-
-                sleep(100);
-
-                int sideTicks = -150;
-                // 1&4: value, 2&3: -value
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.25,
-                        true, robot.yaw0);
-
-                sleep(100);
-
                 forwardTicks = 3000;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                         true, robot.yaw0);
 
-                sleep(100);
-
-                robot.boardPixel.setPosition(0.0);
-
-                robot.boardPixel.setPosition(1);
-                //requestOpModeStop();
-
-
-
-            } else {
-                forwardTicks = 200;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
-                        true, robot.yaw0);
-
-                sleep(500);
-
-                robot.autoPixel.setPosition(0.0);
-
-                sleep(500);
-
-                forwardTicks = -100;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
-                        true, robot.yaw0);
-
-                sleep(500);
-
-                turnToTargetYaw(-90 + robot.yaw0, 0.4, 6000);
-
-                sleep(500);
-
-                forwardTicks = 3000;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
-                        true, robot.yaw0);
-
-                sleep(100);
-
-                robot.boardPixel.setPosition(0.0);
 
                 robot.boardPixel.setPosition(1.0);
-            }
 
+                robot.boardPixel.setPosition(0.0);
+
+
+            }
 
             while (opModeIsActive()) {
                 telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\nCurrent Yaw: %.1f",
@@ -182,7 +139,7 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
                              boolean bKeepYaw, double targetYaw){
         double currentYaw, diffYaw;
         double powerDeltaPct, powerL, powerR;
-        double leftRatioToCounterCOG = 1.0;
+        double leftRatioToCounterCOG = 0.95;
         int direction;
 
         robot.motorfl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -248,10 +205,6 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
         robot.motorbl.setPower(0);
         robot.motorfr.setPower(0);
         robot.motorbr.setPower(0);
-    }
-
-    private void nonEncoderDrive(){
-
     }
 
     private void driveStrafe(int flTarget, int blTarget, int frTarget, int brTarget,
@@ -342,8 +295,8 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
                 && opModeIsActive()
                 && ((timeCurrent-timeBegin) < maxAllowedTimeInMills)) {
             ticks = (int) (diffYaw * ticksPerDegree);
-            if (ticks > 150)
-                ticks = 150;
+            if (ticks > 200)
+                ticks = 200;
 
             tickDirection = (currentYaw < targetYawDegree) ? -1 : 1;
             if (ticks < 1)

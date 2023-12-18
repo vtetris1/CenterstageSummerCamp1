@@ -119,6 +119,7 @@ public class RobotHardware {
         boardPixel = hwMap.get(Servo.class, "boardPixel");
         //autoPixel.setPosition(0.5);
         //boardPixel.setPosition(0);
+        grabServo.setPosition(0.4);
 
         // Get distance sensors
         distanceR = hwMap.get(DistanceSensor.class, "distanceR");
@@ -216,9 +217,9 @@ public class RobotHardware {
 
 
 }
-/* port 0 motorfl
+/* port 0 motorls
    port 1 motorbl
-   port 2 motorls
+   port 2 motorfl
    port 3 motorap
    extension hub port 0 motorfr
    extension hub port 1 motorbr
