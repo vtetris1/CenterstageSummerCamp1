@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 //ignore this for now
 @Autonomous(name="Red_Near_v1_F4_D6")
-@Disabled
+
 public class Red_Near_v1_F4_D6 extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
     // Motor encoder parameter
@@ -33,81 +33,73 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        int forwardTicks = 4000; // default 1050
-        driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
-                true, robot.yaw0);
 
-        while(opModeIsActive()) {
-            telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\nCurrent Yaw: %.1f",
-                    robot.distanceR.getDistance(DistanceUnit.INCH),
-                    robot.distanceL.getDistance(DistanceUnit.INCH),
-                    robot.getCurrentYaw()));
-            telemetry.update();
+
+        if (opModeIsActive()) {
+            int forwardTicks = 1215; // default 1050
+            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+                    true, robot.yaw0);
+
+            if (robot.distanceL.getDistance(DistanceUnit.INCH) < 10) {
+
+                turnToTargetYaw(90+robot.yaw0, 0.42, 6000);
+
+                forwardTicks = 175; // default 1050
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+                        true, robot.yaw0);
+
+                robot.autoPixel.setPosition(0.0);
+                sleep(1000);
+                //requestOpModeStop();
+
+                turnToTargetYaw(-90+robot.yaw0, 0.42, 10000);
+
+
+                forwardTicks = 1500; // default 1050
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+                        true, robot.yaw0);
+
+                sleep(100);
+
+                robot.boardPixel.setPosition(1.0);
+
+                robot.boardPixel.setPosition(0.0);
+            }
+
+            else if (robot.distanceR.getDistance(DistanceUnit.INCH) < 10) {
+                forwardTicks = 110;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+                sleep(100);
+
+                turnToTargetYaw(90+robot.yaw0, 0.4, 6000);
+
+                sleep(100);
+
+                forwardTicks = 100;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+                robot.autoPixel.setPosition(0.0);
+                sleep(1000);
+                //requestOpModeStop();
+
+            }
+
+            else {
+                forwardTicks = 100;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+
+                robot.autoPixel.setPosition(0.0);
+            }
         }
 
-        double distThreshold = 10.0;
-        int spikeMode = 2;
-        int ticks = 0;
 
 
 
-        if (robot.distanceL.getDistance(DistanceUnit.INCH) < distThreshold) {
-            spikeMode = 1;
-            // Spike 1
-            // back ~3 inches
-            ticks = 200;
-            requestOpModeStop();
-
-            driveMotors(ticks, ticks, ticks, ticks, -0.6,
-                    false, robot.yaw0);
-            requestOpModeStop();
-
-            // Turn left 90 degree
-            turnToTargetYaw(robot.yaw0+90, 0.6, 3000);
-
-            // Release preloaded pixel 1
-            deployPreloadedPixel1(800);
-            // Turn right 180 degree
-            turnToTargetYaw(robot.yaw0-90, 0.8, 1000);
-
-            // Move forward distance ~48 inches
-
-
-        }
-        else if (robot.distanceR.getDistance(DistanceUnit.INCH) < distThreshold){
-            spikeMode = 3;
-
-            // back about 6 inches
-
-            // move right for about 5 inches
-
-            // release preloaded pixel 1
-
-            // turn right 90 degree
-
-            // move forward
-
-            // move left
-
-            // orient
-
-        }
-        else {
-            spikeMode = 2;
-            // do nothing.
-
-
-        }
-
-        // Deploy preloaded pixel 1
-        /*
-        robot.preloader1.setPosition(1.0);
-        sleep(1000);
-        robot.preloader1.setPosition(0.5);
-        sleep(1000);
-        requestOpModeStop();
-
-             */
     }
 
     private void driveMotors(int flTarget, int blTarget, int frTarget, int brTarget,
@@ -286,8 +278,8 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
                 && opModeIsActive()
                 && ((timeCurrent-timeBegin) < maxAllowedTimeInMills)) {
             ticks = (int) (diffYaw * ticksPerDegree);
-            if (ticks > 50)
-                ticks = 50;
+            if (ticks > 160)
+                ticks = 160;
             tickDirection = (currentYaw < targetYawDegree) ? -1 : 1;
             if (ticks < 1)
                 break;

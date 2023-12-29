@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
 //test
@@ -32,7 +33,12 @@ public class OpMode3 extends LinearOpMode {
 
             robot.setDrivePower(vertical+turn-horizontal,vertical-turn+horizontal,vertical+turn+horizontal,vertical-turn-horizontal);
 
-
+            telemetry.addLine(String.format("FL: %d \nBL %d \nFR: %d \nBR: %d ",
+                    robot.motorfl.getCurrentPosition(),
+                    robot.motorbl.getCurrentPosition(),
+                    robot.motorfr.getCurrentPosition(),
+                    robot.motorbr.getCurrentPosition()
+                    ));
             if (-gamepad2.left_stick_y > 0.1){
                 robot.setArmPower(0.25);
             }

@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode.common.hardware;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -128,6 +129,7 @@ public class RobotHardware {
 
         // reverse motor directions
         motorbl.setDirection(DcMotor.Direction.REVERSE);
+        motorfl.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         setDrivetrainMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -218,8 +220,8 @@ public class RobotHardware {
 
 }
 /* port 0 motorls
-   port 1 motorbl
-   port 2 motorfl
+   port 1 motorfl
+   port 2 motorbl
    port 3 motorap
    extension hub port 0 motorfr
    extension hub port 1 motorbr

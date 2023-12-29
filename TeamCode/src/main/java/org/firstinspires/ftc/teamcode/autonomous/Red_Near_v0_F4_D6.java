@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
 //ignore this for now
-@Autonomous(name="Red_Near_v0_F4_D6")
+@Autonomous(name="Red_Near_v0_F4-D6")
 public class Red_Near_v0_F4_D6 extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
     // Motor encoder parameter

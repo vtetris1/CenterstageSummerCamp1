@@ -31,7 +31,7 @@ public class AutoPixelTest extends LinearOpMode {
             telemetry.update();
 
             int forwardTicks = 875;
-            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.55,
                     true, robot.yaw0);
             sleep(1000);
 
