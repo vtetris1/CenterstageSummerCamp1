@@ -60,7 +60,7 @@ public class RobotHardware {
 
     public DcMotor launcher = null;
 
-    public DcMotor linearSlider = null;
+    //public DcMotor linearSlider = null;
 
 
     public DistanceSensor distanceR = null;
@@ -100,7 +100,7 @@ public class RobotHardware {
         motorbl = hwMap.get(DcMotor.class, "motorbl");
         motorbr = hwMap.get(DcMotor.class, "motorbr");
         launcher = hwMap.get(DcMotor.class, "launcher");
-        linearSlider = hwMap.get(DcMotor.class, "motorls");
+        //linearSlider = hwMap.get(DcMotor.class, "motorls");
 
         liftHex = hwMap.get(DcMotor.class, "liftHex");
         liftArm = hwMap.get(DcMotor.class, "liftArm");
@@ -209,9 +209,9 @@ public class RobotHardware {
 
     }
     public void setAllDrivePower(double p){ setDrivePower(p,p,p,p);}
-    public void setArmPower(double armPower){
-        linearSlider.setPower(armPower);
-    }
+    //public void setArmPower(double armPower){
+     //   linearSlider.setPower(armPower);
+    //}
 
 
 

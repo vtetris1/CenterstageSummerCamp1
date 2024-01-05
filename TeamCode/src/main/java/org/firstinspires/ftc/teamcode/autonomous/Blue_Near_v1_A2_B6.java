@@ -34,7 +34,7 @@ public class Blue_Near_v1_A2_B6 extends LinearOpMode {
         if (opModeIsActive()) {
             telemetry.update();
 
-            int forwardTicks = 875;
+            int forwardTicks = 1190;
             driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                     true, robot.yaw0);
             sleep(1000);
@@ -99,16 +99,16 @@ public class Blue_Near_v1_A2_B6 extends LinearOpMode {
                 //requestOpModeStop();
 
             } else {
-                forwardTicks = 100;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                forwardTicks = 250;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.5,
                         true, robot.yaw0);
 
 
-                robot.autoPixel.setPosition(0.0);
+                robot.autoPixel.setPosition(1.0);
 
                 sleep(1000);
 
-                forwardTicks = -500;
+                forwardTicks = -200;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                         true, robot.yaw0);
 
@@ -126,15 +126,10 @@ public class Blue_Near_v1_A2_B6 extends LinearOpMode {
 
             }
 
-            while (opModeIsActive()) {
-                telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\nCurrent Yaw: %.1f",
-                        robot.distanceR.getDistance(DistanceUnit.INCH),
-                        robot.distanceL.getDistance(DistanceUnit.INCH),
-                        robot.getCurrentYaw()));
-                telemetry.update();
+
             }
         }
-    }
+
 
     private void driveMotors(int flTarget, int blTarget, int frTarget, int brTarget,
                              double power,

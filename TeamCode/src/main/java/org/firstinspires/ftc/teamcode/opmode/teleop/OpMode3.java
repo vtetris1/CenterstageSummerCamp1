@@ -39,7 +39,7 @@ public class OpMode3 extends LinearOpMode {
                     robot.motorfr.getCurrentPosition(),
                     robot.motorbr.getCurrentPosition()
                     ));
-            if (-gamepad2.left_stick_y > 0.1){
+            /*if (-gamepad2.left_stick_y > 0.1){
                 robot.setArmPower(0.25);
             }
             else if (-gamepad2.left_stick_y < -0.1){
@@ -48,7 +48,7 @@ public class OpMode3 extends LinearOpMode {
             else{
                 robot.setArmPower(0);
             }
-
+*/
             //
             //lift arm start
             if(gamepad1.a) { //if button a pressed
@@ -102,7 +102,7 @@ public class OpMode3 extends LinearOpMode {
                 robot.launcher.setPower(0.0);
                 robot.airplaneFeeder.setPosition(0.5);
             }
-
+/*
            if (-gamepad2.left_stick_y > 0.1){
                 robot.setArmPower(0.45);
             }
@@ -112,7 +112,7 @@ public class OpMode3 extends LinearOpMode {
             else{
                 robot.setArmPower(0);
             }
-
+*/
             //servos
 
 //grabber
