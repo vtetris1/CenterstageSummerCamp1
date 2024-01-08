@@ -32,10 +32,11 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
+            robot.tiltServo.setPosition(0.75);
             telemetry.update();
 
             int forwardTicks = 1215;
-            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.35,
+            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.55,
                     true, robot.yaw0);
             sleep(1000);
 
@@ -57,10 +58,19 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
 
                 sleep(500);
 
-                robot.autoPixel.setPosition(0.0);
+                robot.autoPixel.setPosition(1.0);
 
-                sleep(350);
+                sleep(3500);
 
+                forwardTicks = -400;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+
+                robot.boardPixel.setPosition(1.0);
+                sleep(3000);
+                robot.boardPixel.setPosition(0.0);
+/*
                 turnToTargetYaw(0 + robot.yaw0, 0.4, 8000);
 
                 sleep(100);
@@ -86,21 +96,16 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
                 sleep(100);
 
                 robot.boardPixel.setPosition(0.0);
-
+*/
                 //requestOpModeStop();
             }
             else if (robot.distanceR.getDistance(DistanceUnit.INCH) < 10) {
+
+                turnToTargetYaw(90 + robot.yaw0, 0.425, 6000);
+
+                sleep(100);
+
                 forwardTicks = 85;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.35,
-                        true, robot.yaw0);
-
-                sleep(100);
-
-                turnToTargetYaw(-60 + robot.yaw0, 0.42, 6000);
-
-                sleep(100);
-
-                forwardTicks = 250;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                         true, robot.yaw0);
 
@@ -108,20 +113,32 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
 
                 robot.autoPixel.setPosition(0.0);
 
-                sleep(1000);
+                sleep(2000);
 
-                forwardTicks = -150;
+                forwardTicks = -20;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                         true, robot.yaw0);
 
+                turnToTargetYaw(-90 + robot.yaw0, 0.525, 10000);
 
+                forwardTicks = 100;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+                forwardTicks = 4000;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                        true, robot.yaw0);
+
+                robot.boardPixel.setPosition(1.0);
+                sleep(1500);
+                robot.boardPixel.setPosition(0.0);
 
                 //forwardTicks = -200;
                 //driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                 //         true, robot.yaw0);
 
                 //sleep(1000);
-
+/*
                 turnToTargetYaw(0 + robot.yaw0, 0.4, 2000);
 
                 sleep(100);
@@ -150,37 +167,33 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
                 //requestOpModeStop();
 
 
-
+*/
             } else {
-                forwardTicks = 225;
+                forwardTicks = 175;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                         true, robot.yaw0);
-
-                sleep(100);
 
                 robot.autoPixel.setPosition(0.0);
 
-                sleep(700);
+                sleep(2000);
 
-                forwardTicks = -150;
+                forwardTicks = -140;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
-                        true, robot.yaw0);
+                        false, robot.yaw0);
 
-                sleep(500);
+                turnToTargetYaw(-90+robot.yaw0, 0.42, 6000);
 
-                turnToTargetYaw(-90 + robot.yaw0, 0.4, 6000);
-
-                sleep(500);
-
-                forwardTicks = 3000;
+                forwardTicks = 4000;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
-                        true, robot.yaw0);
+                        true, (-90 + robot.yaw0));
 
                 sleep(100);
 
+                robot.boardPixel.setPosition(1.0);
+                sleep(1500);
                 robot.boardPixel.setPosition(0.0);
 
-                robot.boardPixel.setPosition(1.0);
+
             }
 
 
@@ -359,8 +372,8 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
                 && opModeIsActive()
                 && ((timeCurrent-timeBegin) < maxAllowedTimeInMills)) {
             ticks = (int) (diffYaw * ticksPerDegree);
-            if (ticks > 150)
-                ticks = 150;
+            if (ticks > 200)
+                ticks = 200;
 
             tickDirection = (currentYaw < targetYawDegree) ? -1 : 1;
             if (ticks < 1)

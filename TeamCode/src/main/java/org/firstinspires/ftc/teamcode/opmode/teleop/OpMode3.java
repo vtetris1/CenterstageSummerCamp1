@@ -27,18 +27,18 @@ public class OpMode3 extends LinearOpMode {
         // Put initialization blocks here.
         waitForStart();
         while (opModeIsActive()) {
-            double horizontal = gamepad1.left_stick_x * 0.75;
-            double vertical = -gamepad1.left_stick_y * 0.75;
-            double turn = gamepad1.right_stick_x * 0.75;
+            double horizontal = gamepad1.left_stick_x * 0.8;
+            double vertical = -gamepad1.left_stick_y * 0.8;
+            double turn = gamepad1.right_stick_x * 0.8;
 
-            robot.setDrivePower(vertical+turn-horizontal,vertical-turn+horizontal,vertical+turn+horizontal,vertical-turn-horizontal);
+            robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
 
             telemetry.addLine(String.format("FL: %d \nBL %d \nFR: %d \nBR: %d ",
                     robot.motorfl.getCurrentPosition(),
                     robot.motorbl.getCurrentPosition(),
                     robot.motorfr.getCurrentPosition(),
                     robot.motorbr.getCurrentPosition()
-                    ));
+            ));
             /*if (-gamepad2.left_stick_y > 0.1){
                 robot.setArmPower(0.25);
             }
@@ -51,7 +51,7 @@ public class OpMode3 extends LinearOpMode {
 */
             //
             //lift arm start
-            if(gamepad1.a) { //if button a pressed
+            if (gamepad1.a) { //if button a pressed
                 TiltLiftOne(-0.5, 300, -0.1, 0.8, 350, 0);
 
                 //tilt the lift to be upright
@@ -76,13 +76,13 @@ public class OpMode3 extends LinearOpMode {
                 robot.liftArm.setPower(0);
             }
 
-            if(gamepad1.y) { //if button a pressed
+            if (gamepad1.y) { //if button a pressed
                 // Extend liftArm
                 robot.liftArm.setPower(0.8);
                 sleep(300);             // let motor run for some time seconds.
                 robot.liftArm.setPower(0);
             }
-            if(gamepad1.x) { //if button a pressed
+            if (gamepad1.x) { //if button a pressed
                 // Retract liftArm
                 robot.liftArm.setPower(-1.0);
                 sleep(300);             // let motor run for some time seconds.
@@ -91,9 +91,9 @@ public class OpMode3 extends LinearOpMode {
 
 
             // Launch airplane
-            if (gamepad2.a) {
+            if (gamepad1.right_trigger > 0.5) {
                 // Tilt the launcher in a given degree in order to launch airplane over the bar
-                TiltLiftOne(-0.5, (int)(300 * 1.5), -0.1, 0.8, (int)(350 * 1.6), 0);
+                TiltLiftOne(-0.5, (int) (300 * 2.5), -0.1, 0.8, (int) (350 * 1.6), 0);
 
                 robot.launcher.setPower(-1.0);
                 sleep(3000);
@@ -118,29 +118,52 @@ public class OpMode3 extends LinearOpMode {
 //grabber
             if (gamepad2.left_trigger > 0.5) {
                 robot.grabServo.setPosition(0.4); // open
-            }
-            else if (gamepad2.right_trigger > 0.5){
-                robot.grabServo.setPosition(1); // close
+
+            } else if (gamepad2.right_trigger > 0.5) {
+
+                robot.grabServo.setPosition(0.0); // close
             }
 
- 
+
 //tilt servo
-            double initTilt = 0.0;
 
-            if (gamepad2.right_stick_y > 0.7){
-                initTilt = 1.0;
-                robot.tiltServo.setPosition(initTilt);
+
+
+            if (gamepad2.b) {
+                robot.tiltServo.setPosition(0.6);
             }
 
-            if (gamepad2.right_stick_y < - 0.7){
-                initTilt = 0.15;
-                robot.tiltServo.setPosition(initTilt);
+            if (gamepad2.y) {
+                robot.tiltServo.setPosition(0.2);
             }
-            telemetry.update();
+
+            if (gamepad2.a) {
+                robot.tiltServo.setPosition(1.0);
+
+            }
+                telemetry.update();
+
+            //emergency releases
+
+            if (gamepad2.dpad_up) {
+                robot.boardPixel.setPosition(1.0);
+            }
+
+            if (gamepad2.dpad_down) {
+                robot.boardPixel.setPosition(0.0);
+            }
+
+            if (gamepad2.dpad_right) {
+                robot.autoPixel.setPosition(1.0);
+            }
+
+            if (gamepad2.dpad_left) {
+                robot.autoPixel.setPosition(0.0);
+            }
 
 
+            }
         }
-    }
 
     private void TiltLiftOne(double crankPowerBegin, int crankTimeMs, double crankPowerEnd,
                              double liftPowerBegin, int liftTimeMs, double liftPowerEnd) {
