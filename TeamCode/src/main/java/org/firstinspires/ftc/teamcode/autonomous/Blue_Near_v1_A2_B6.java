@@ -32,9 +32,9 @@ public class Blue_Near_v1_A2_B6 extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            robot.tiltServo.setPosition(0.75);
+            robot.tiltServo.setPosition(0.6);
             telemetry.update();
-
+            robot.tiltServo.setPosition(0.6);
             int forwardTicks = 1215;
             driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.5,
                     true, robot.yaw0);
@@ -58,8 +58,8 @@ public class Blue_Near_v1_A2_B6 extends LinearOpMode {
 
                 turnToTargetYaw(90 + robot.yaw0, 0.8, 8000);
 
-                forwardTicks = 1800;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+                forwardTicks = 1650;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.45,
                         true, (90 + robot.yaw0));
 
                 sleep(100);
@@ -119,8 +119,8 @@ public class Blue_Near_v1_A2_B6 extends LinearOpMode {
 
                 turnToTargetYaw(90+robot.yaw0, 0.6, 1500);
 
-                forwardTicks = 1700;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.7,
+                forwardTicks = 1600;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.45,
                         true, (90+ robot.yaw0));
 
                 sideTicks = -1000;
@@ -162,7 +162,7 @@ public class Blue_Near_v1_A2_B6 extends LinearOpMode {
                 //requestOpModeStop();
 
             } else {
-                forwardTicks = 175;
+                forwardTicks = 100;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.42,
                         true, robot.yaw0);
 
@@ -176,11 +176,22 @@ public class Blue_Near_v1_A2_B6 extends LinearOpMode {
 
                 turnToTargetYaw(90+robot.yaw0, 0.42, 6000);
 
-                forwardTicks = 1700;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                forwardTicks = 1550;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.45,
                         true, (90 + robot.yaw0));
 
+                sleep(500);
+
+                int sideTicks = -300;
+                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.6,
+                        true, (90 + robot.yaw0));
+
+                turnToTargetYaw(90+robot.yaw0, 0.42, 6000);
                 sleep(100);
+
+                forwardTicks = 200;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.45,
+                        true, (90 + robot.yaw0));
 
                 robot.boardPixel.setPosition(1.0);
                 sleep(1600);
@@ -188,7 +199,7 @@ public class Blue_Near_v1_A2_B6 extends LinearOpMode {
 
                 sleep(2000);
 
-                int sideTicks = -1200;
+                sideTicks = -1000;
                 driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.4,
                         true, robot.yaw0);
 
