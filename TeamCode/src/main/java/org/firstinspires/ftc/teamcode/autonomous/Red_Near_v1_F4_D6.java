@@ -84,6 +84,8 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.45,
                         true, (-90 + robot.yaw0));
 
+                turnToTargetYaw(-90+robot.yaw0, 0.42, 2000);
+
                 sleep(100);
 
                 robot.boardPixel.setPosition(1.0);
@@ -113,7 +115,7 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
 
                 sleep(100);
 
-                turnToTargetYaw(-60+robot.yaw0, 0.55, 6000);
+                turnToTargetYaw(-60+robot.yaw0, 0.55, 4000);
 
                 sleep(100);
 
@@ -145,11 +147,11 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
 
                 turnToTargetYaw(-90+robot.yaw0, 0.6, 3000);
 
-                forwardTicks = 1600;
+                forwardTicks = 1700;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.7,
                         true, (-90+ robot.yaw0));
 
-
+                turnToTargetYaw(-90+robot.yaw0, 0.6, 3000);
                 sleep(1000);
 
                 robot.boardPixel.setPosition(1.0);
@@ -186,7 +188,7 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
 
                 sleep(1500);
 
-                forwardTicks = -300;
+                forwardTicks = -250;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.42,
                         false, robot.yaw0);
 
@@ -196,7 +198,7 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.45,
                         true, (-90 + robot.yaw0));
 
-
+                turnToTargetYaw(-90+robot.yaw0, 0.42, 2000);
                 sleep(100);
 
                 robot.boardPixel.setPosition(1.0);

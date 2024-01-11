@@ -118,7 +118,7 @@ public class Blue_Far_v1_A2_B6 extends LinearOpMode {
                 //requestOpModeStop();
 */
             } else {
-                forwardTicks = 175;
+                forwardTicks = 100;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.2,
                         true, robot.yaw0);
 
