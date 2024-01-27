@@ -45,7 +45,7 @@ public class AutoPixelTest extends LinearOpMode {
                 turnToTargetYaw(-90+robot.yaw0, 0.4, 6500);
 
 
-                robot.autoPixel.setPosition(0.0);
+                //robot.autoPixel.setPosition(0.0);
                 sleep(1000);
                 //requestOpModeStop();
             }
@@ -65,7 +65,7 @@ public class AutoPixelTest extends LinearOpMode {
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                         true, robot.yaw0);
 
-                robot.autoPixel.setPosition(0.0);
+                //robot.autoPixel.setPosition(0.0);
                 sleep(1000);
                 //requestOpModeStop();
 
@@ -77,7 +77,7 @@ public class AutoPixelTest extends LinearOpMode {
                         true, robot.yaw0);
 
 
-                robot.autoPixel.setPosition(0.0);
+                //robot.autoPixel.setPosition(0.0);
             }
 
 

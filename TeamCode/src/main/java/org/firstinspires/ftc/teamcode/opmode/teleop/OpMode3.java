@@ -27,7 +27,7 @@ public class OpMode3 extends LinearOpMode {
         // Put initialization blocks here.
         waitForStart();
         while (opModeIsActive()) {
-            double horizontal = gamepad1.left_stick_x * 0.8;
+            double horizontal = -gamepad1.left_stick_x * 0.8;
             double vertical = -gamepad1.left_stick_y * 0.8;
             double turn = gamepad1.right_stick_x * 0.8;
 
@@ -117,52 +117,61 @@ public class OpMode3 extends LinearOpMode {
 
 //grabber
             if (gamepad2.left_trigger > 0.5) {
-                robot.grabServo.setPosition(0.4); // open
+                robot.grabServoLeft.setPosition(1.0); // open
 
-            } else if (gamepad2.right_trigger > 0.5) {
 
-                robot.grabServo.setPosition(0.0); // close
+
+            if (gamepad2.left_bumper) {
+                robot.grabServoLeft.setPosition(0.0); // close
+
+
+            }
+
+            if (gamepad2.right_trigger > 0.5) {
+
+                robot.grabServoRight.setPosition(1.0); // open
+            }
+
+            } else if (gamepad2.right_bumper) {
+
+                robot.grabServoRight.setPosition(0.0); // close
             }
 
 
-//tilt servo
 
-
-
-            if (gamepad2.b) {
-                robot.tiltServo.setPosition(0.6);
+//tilt arm
+            if (gamepad2.left_stick_y > 0.7) {
+                robot.liftHex.setPower(0.5);
             }
 
-            if (gamepad2.y) {
-                robot.tiltServo.setPosition(0.2);
+            else if (gamepad2.left_stick_y < -0.7) {
+                robot.liftHex.setPower(-0.5);
             }
 
-            if (gamepad2.a) {
-                robot.tiltServo.setPosition(1.0);
+
+            if (gamepad2.right_stick_y > 0.7) {
+                robot.tiltServoLeft.setPosition(1.0);
+            }
+
+            else if (gamepad2.right_stick_y < -0.7) {
+                robot.tiltServoLeft.setPosition(0);
+            }
+
+
+
+            else if (gamepad2.right_trigger > 0.5) {
+
+                robot.grabServoRight.setPosition(0.4); // open
+            }
+
+
 
             }
                 telemetry.update();
 
             //emergency releases
 
-            if (gamepad2.dpad_up) {
-                robot.boardPixel.setPosition(1.0);
-            }
 
-            if (gamepad2.dpad_down) {
-                robot.boardPixel.setPosition(0.0);
-            }
-
-            if (gamepad2.dpad_right) {
-                robot.autoPixel.setPosition(1.0);
-            }
-
-            if (gamepad2.dpad_left) {
-                robot.autoPixel.setPosition(0.0);
-            }
-
-
-            }
         }
 
     private void TiltLiftOne(double crankPowerBegin, int crankTimeMs, double crankPowerEnd,

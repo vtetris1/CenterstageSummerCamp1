@@ -67,13 +67,15 @@ public class RobotHardware {
     public DistanceSensor distanceL = null;
 
 
-    public Servo tiltServo = null;
-    public Servo grabServo = null;
+    public Servo tiltServoRight = null;
+    public Servo grabServoRight = null;
+
+    public Servo tiltServoLeft = null;
+    public Servo grabServoLeft = null;
+
 
     public Servo airplaneFeeder = null;
-    public Servo autoPixel = null;
 
-    public Servo boardPixel = null;
     public IMU imu;
 
     // Initial robot orientation
@@ -99,8 +101,7 @@ public class RobotHardware {
         motorfr = hwMap.get(DcMotor.class, "motorfr");
         motorbl = hwMap.get(DcMotor.class, "motorbl");
         motorbr = hwMap.get(DcMotor.class, "motorbr");
-        launcher = hwMap.get(DcMotor.class, "launcher");
-        //linearSlider = hwMap.get(DcMotor.class, "motorls");
+        //launcher = hwMap.get(DcMotor.class, "launcher");
 
         liftHex = hwMap.get(DcMotor.class, "liftHex");
         liftArm = hwMap.get(DcMotor.class, "liftArm");
@@ -114,10 +115,10 @@ public class RobotHardware {
         // Define and initialize ALL installed servos.
 
         airplaneFeeder = hwMap.get(Servo.class, "feeder");
-        tiltServo = hwMap.get(Servo.class, "tiltServo");
-        grabServo = hwMap.get(Servo.class, "grabServo");
-        autoPixel = hwMap.get(Servo.class, "autoPixel");
-        boardPixel = hwMap.get(Servo.class, "boardPixel");
+        tiltServoRight = hwMap.get(Servo.class, "tiltServoR");
+        grabServoRight = hwMap.get(Servo.class, "grabServoR");
+        tiltServoLeft = hwMap.get(Servo.class, "tiltServoL");
+        grabServoLeft = hwMap.get(Servo.class, "grabServoL");
         //autoPixel.setPosition(0.5);
         //boardPixel.setPosition(0);
         //grabServo.setPosition(0.4);

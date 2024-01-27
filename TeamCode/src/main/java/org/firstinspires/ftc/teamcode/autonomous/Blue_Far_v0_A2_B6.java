@@ -67,9 +67,9 @@ public class Blue_Far_v0_A2_B6 extends LinearOpMode {
                 true, robot.yaw0);
 
         // Put board pixel - 5 points or 20 points if on the backdrop
-        robot.boardPixel.setPosition(1.0);
+        //robot.boardPixel.setPosition(1.0);
         sleep(1000);
-        robot.boardPixel.setPosition(0);
+        //robot.boardPixel.setPosition(0);
         sleep(1000);
 
         // Move back a few inches
@@ -78,9 +78,9 @@ public class Blue_Far_v0_A2_B6 extends LinearOpMode {
                 false, robot.yaw0);
 
         // Release auto pixel - 3 points
-        robot.autoPixel.setPosition(1.0);
+        //robot.autoPixel.setPosition(1.0);
         sleep(1000);
-        robot.autoPixel.setPosition(0.5);
+        //robot.autoPixel.setPosition(0.5);
         sleep(1000);
 
         // Move side to be away from the pixel
@@ -287,9 +287,9 @@ public class Blue_Far_v0_A2_B6 extends LinearOpMode {
 
     private void deployPreloadedPixel1(int timeIntervalMs) {
         // Deploy preloaded pixel 1
-        robot.autoPixel.setPosition(1.0);
+        //robot.autoPixel.setPosition(1.0);
         sleep(timeIntervalMs);
-        robot.autoPixel.setPosition(0.5);
+     //   robot.autoPixel.setPosition(0.5);
         sleep(timeIntervalMs);
 
     }

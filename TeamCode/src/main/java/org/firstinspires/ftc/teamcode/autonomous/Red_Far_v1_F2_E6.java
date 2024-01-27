@@ -32,7 +32,7 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            robot.tiltServo.setPosition(0.65);
+  //          robot.tiltServo.setPosition(0.65);
 
             sleep(100);
 
@@ -55,7 +55,7 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
                 turnToTargetYaw(0 + robot.yaw0, 0.4, 2000);
 
 
-                robot.autoPixel.setPosition(0.0);
+ //               robot.autoPixel.setPosition(0.0);
 
                 sleep(1500);
 
@@ -80,16 +80,17 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
 
                 turnToTargetYaw(-90 + robot.yaw0, 0.5, 2000);
 
+               // robot.tiltServo.setPosition(0.2);
                 forwardTicks = 2000;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.38,
                         true,(-90 + robot.yaw0));
-
+/*
                 robot.boardPixel.setPosition(1.0);
                 sleep(1000);
                 robot.boardPixel.setPosition(0.7);
                 sleep(1000);
                 robot.boardPixel.setPosition(0.0);
-
+*/
 
 
 /*
@@ -142,7 +143,7 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
             }
             else if (robot.distanceR.getDistance(DistanceUnit.INCH) < 10) {
 
-                turnToTargetYaw(90 + robot.yaw0, 0.425, 6000);
+                turnToTargetYaw(60 + robot.yaw0, 0.425, 6000);
 
                 sleep(100);
 
@@ -152,10 +153,10 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
 
                 sleep(100);
 
-                robot.autoPixel.setPosition(0.0);
+  //              robot.autoPixel.setPosition(0.0);
 
                 sleep(2000);
-
+/*
                 forwardTicks = -20;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                         true, robot.yaw0);
@@ -207,14 +208,14 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
                 robot.boardPixel.setPosition(0.0);
                 //requestOpModeStop();
 
-
 */
+
             } else {
                 forwardTicks = 175;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                         true, robot.yaw0);
 
-                robot.autoPixel.setPosition(0.0);
+    //            robot.autoPixel.setPosition(0.0);
 
                 sleep(2000);
 
@@ -246,13 +247,13 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
                         true, (-90 + robot.yaw0));
 
                 sleep(100);
-
+/*
                 robot.boardPixel.setPosition(1.0);
                 sleep(1000);
                 robot.boardPixel.setPosition(0.7);
                 sleep(1000);
                 robot.boardPixel.setPosition(0.0);
-
+*/
 
             }
 
@@ -460,9 +461,9 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
 
     private void deployPreloadedPixel1(int timeIntervalMs) {
         // Deploy preloaded pixel 1
-        robot.autoPixel.setPosition(1.0);
+     //   robot.autoPixel.setPosition(1.0);
         sleep(timeIntervalMs);
-        robot.autoPixel.setPosition(0.5);
+     //   robot.autoPixel.setPosition(0.5);
         sleep(timeIntervalMs);
 
     }

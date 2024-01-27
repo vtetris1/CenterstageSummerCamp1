@@ -295,9 +295,9 @@ public class z_Unused_Red_F2_F6_v1 extends LinearOpMode {
 
     private void deployPreloadedPixel1(int timeIntervalMs) {
         // Deploy preloaded pixel 1
-        robot.autoPixel.setPosition(1.0);
+        //robot.autoPixel.setPosition(1.0);
         sleep(timeIntervalMs);
-        robot.autoPixel.setPosition(0.5);
+        //robot.autoPixel.setPosition(0.5);
         sleep(timeIntervalMs);
 
     }
