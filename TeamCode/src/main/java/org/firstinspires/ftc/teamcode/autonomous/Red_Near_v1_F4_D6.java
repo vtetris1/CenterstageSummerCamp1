@@ -36,6 +36,10 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
 
             //robot.tiltServo.setPosition(0.65);
             telemetry.update();
+
+            robot.grabServoRight.setPosition(1.0);
+            robot.grabServoLeft.setPosition(0.0);
+
             int forwardTicks = 1215; // default 1215
             driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
                     true, robot.yaw0);
@@ -184,7 +188,7 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.42,
                         true, robot.yaw0);
 
-                //robot.autoPixel.setPosition(0.0);
+                robot.tiltServoLeft.setPosition(0);
 
                 sleep(1500);
 

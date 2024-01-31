@@ -119,9 +119,7 @@ public class OpMode3 extends LinearOpMode {
             if (gamepad2.left_trigger > 0.5) {
                 robot.grabServoLeft.setPosition(1.0); // open
 
-
-
-            if (gamepad2.left_bumper) {
+            } else if (gamepad2.left_bumper) {
                 robot.grabServoLeft.setPosition(0.0); // close
 
 
@@ -129,63 +127,54 @@ public class OpMode3 extends LinearOpMode {
 
             if (gamepad2.right_trigger > 0.5) {
 
-                robot.grabServoRight.setPosition(1.0); // open
-            }
-
+                robot.grabServoRight.setPosition(0.0); // open
             } else if (gamepad2.right_bumper) {
 
-                robot.grabServoRight.setPosition(0.0); // close
+                robot.grabServoRight.setPosition(1.0); // close
             }
-
 
 
 //tilt arm
             if (gamepad2.left_stick_y > 0.7) {
-                robot.liftHex.setPower(0.5);
+                robot.liftHex.setPower(-0.3);
             }
 
             else if (gamepad2.left_stick_y < -0.7) {
-                robot.liftHex.setPower(-0.5);
+                robot.liftHex.setPower(0.5);
             }
 
+            else {
+                robot.liftHex.setPower(0);
+            }
 
+//tilt servo
             if (gamepad2.right_stick_y > 0.7) {
                 robot.tiltServoLeft.setPosition(1.0);
-            }
 
-            else if (gamepad2.right_stick_y < -0.7) {
+            } else if (gamepad2.right_stick_y < -0.7) {
                 robot.tiltServoLeft.setPosition(0);
             }
 
 
-
-            else if (gamepad2.right_trigger > 0.5) {
-
-                robot.grabServoRight.setPosition(0.4); // open
-            }
-
-
-
-            }
-                telemetry.update();
-
-            //emergency releases
-
-
         }
 
-    private void TiltLiftOne(double crankPowerBegin, int crankTimeMs, double crankPowerEnd,
-                             double liftPowerBegin, int liftTimeMs, double liftPowerEnd) {
-        //tilt the lift to be upright
-        robot.liftHex.setPower(crankPowerBegin);   //set motor power
-        sleep(crankTimeMs);          // let motor run for some time seconds.
-        robot.liftHex.setPower(crankPowerEnd);   //set lower motor power to maintain the position
 
-        // Extend liftArm
-        robot.liftArm.setPower(liftPowerBegin);
-        sleep(liftTimeMs);             // let motor run for some time seconds.
-        robot.liftArm.setPower(liftPowerEnd);
+        //emergency releases
     }
 
-}
+        private void TiltLiftOne ( double crankPowerBegin, int crankTimeMs, double crankPowerEnd,
+        double liftPowerBegin, int liftTimeMs, double liftPowerEnd){
+            //tilt the lift to be upright
+            robot.liftHex.setPower(crankPowerBegin);   //set motor power
+            sleep(crankTimeMs);          // let motor run for some time seconds.
+            robot.liftHex.setPower(crankPowerEnd);   //set lower motor power to maintain the position
+
+            // Extend liftArm
+            robot.liftArm.setPower(liftPowerBegin);
+            sleep(liftTimeMs);             // let motor run for some time seconds.
+            robot.liftArm.setPower(liftPowerEnd);
+        }
+
+    }
+
 
