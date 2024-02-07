@@ -10,8 +10,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
 //ignore this for now
-@Autonomous(name="Blue_Far_v1_A2_B6")
-public class Blue_Far_v1_A2_B6 extends LinearOpMode {
+@Autonomous(name="Blue_Far_v2_A2_B6")
+public class Blue_Far_v2_A2_B6 extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
     // Motor encoder parameter
     double ticksPerInch = 31.3;
@@ -28,6 +28,11 @@ public class Blue_Far_v1_A2_B6 extends LinearOpMode {
         telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\n",
                 robot.distanceR.getDistance(DistanceUnit.INCH),
                 robot.distanceL.getDistance(DistanceUnit.INCH)));
+
+        robot.liftHex.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.liftHex.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.liftHex.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         telemetry.update();
         waitForStart();
 
@@ -204,7 +209,7 @@ public class Blue_Far_v1_A2_B6 extends LinearOpMode {
 
                 robot.tiltServoLeft.setPosition(0.0);
                 sleep(100);
-                robot.grabServoRight.setPosition(1.0); //reset right grabber
+                 //reset right grabber
 
                 forwardTicks = -150;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
@@ -224,35 +229,40 @@ public class Blue_Far_v1_A2_B6 extends LinearOpMode {
                 driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.5,
                         true, robot.yaw0);
 
-                turnToTargetYaw(-90+robot.yaw0, 0.42, 3000);
+                turnToTargetYaw(-78+robot.yaw0, 0.42, 3000);
 
+                forwardTicks = 500;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+                        true, (-90 + robot.yaw0));
 
+                robot.tiltServoLeft.setPosition(1.0);
 
-                forwardTicks = -3100;
+                liftArm(-100, 1.0, 200);
+
+                robot.grabServoRight.setPosition(1.0);
+
+                sleep(100);
+
+                robot.tiltServoLeft.setPosition(0.0);
+
+                turnToTargetYaw(-90+robot.yaw0, 0.7, 1000);
+
+                forwardTicks = -3600;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
                         true, (-90 + robot.yaw0));
-/*
-                sideTicks = -150;
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.5,
-                        true, robot.yaw0);
-
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.5,
-                        true, robot.yaw0);
-*/
-                turnToTargetYaw(-90+robot.yaw0, 0.42, 3000);
-
 
                 robot.liftHex.setPower(0.5);
                 sleep(1500);
                 robot.liftHex.setPower(0);
 
-                forwardTicks = -1200;
+                forwardTicks = -1185;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
                         true, (-90 + robot.yaw0));
 
+
                 robot.grabServoLeft.setPosition(1.0);
 
-                robot.liftHex.setPower(-0.5);
+
 
 
 
@@ -276,6 +286,22 @@ public class Blue_Far_v1_A2_B6 extends LinearOpMode {
                 telemetry.update();
             }
         }
+    }
+
+    void liftArm(int ticks, double power, long timeOutMills) {
+        long timeCurrent, timeBegin;
+        timeBegin = timeCurrent = System.currentTimeMillis();
+
+        robot.liftHex.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.liftHex.setTargetPosition(ticks);
+        robot.liftHex.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.liftHex.setPower(power);
+        while(opModeIsActive()
+                && robot.liftHex.isBusy()
+                && (timeCurrent - timeBegin) < timeOutMills) {
+            timeCurrent = System.currentTimeMillis();
+        }
+        robot.liftHex.setPower(0.1 * power);
     }
 
     private void driveMotors(int flTarget, int blTarget, int frTarget, int brTarget,

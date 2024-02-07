@@ -39,21 +39,9 @@ public class OpMode3 extends LinearOpMode {
                     robot.motorfr.getCurrentPosition(),
                     robot.motorbr.getCurrentPosition()
             ));
-            /*if (-gamepad2.left_stick_y > 0.1){
-                robot.setArmPower(0.25);
-            }
-            else if (-gamepad2.left_stick_y < -0.1){
-                robot.setArmPower(-0.25);
-            }
-            else{
-                robot.setArmPower(0);
-            }
-*/
-            //
+
             //lift arm start
             if (gamepad1.a) { //if button a pressed
-                TiltLiftOne(-0.5, 300, -0.1, 0.8, 350, 0);
-
                 //tilt the lift to be upright
                 robot.liftHex.setPower(-0.5);   //set motor power
                 sleep(300);             // let motor run for some time seconds.
@@ -65,18 +53,14 @@ public class OpMode3 extends LinearOpMode {
                 robot.liftArm.setPower(0);
             }
 
-            if (gamepad1.b) {
-                robot.liftHex.setPower(0.9);   //set motor power
+            if (gamepad2.y) {
+                robot.liftHex.setPower(-0.3);   //set motor power
                 sleep(300);             // let motor run for some time seconds.
-                robot.liftHex.setPower(0.4);   //set lower motor power to maintain the position
+                robot.liftHex.setPower(-0.1);   //set lower motor power to maintain the position
 
-                // Retract liftArm
-                robot.liftArm.setPower(-1.0);
-                sleep(350);             // let motor run for some time seconds.
-                robot.liftArm.setPower(0);
             }
 
-            if (gamepad1.y) { //if button a pressed
+            if (gamepad1.a) { //if button a pressed
                 // Extend liftArm
                 robot.liftArm.setPower(0.8);
                 sleep(300);             // let motor run for some time seconds.
@@ -91,6 +75,7 @@ public class OpMode3 extends LinearOpMode {
 
 
             // Launch airplane
+            /*
             if (gamepad1.right_trigger > 0.5) {
                 // Tilt the launcher in a given degree in order to launch airplane over the bar
                 TiltLiftOne(-0.5, (int) (300 * 2.5), -0.1, 0.8, (int) (350 * 1.6), 0);
@@ -102,18 +87,8 @@ public class OpMode3 extends LinearOpMode {
                 robot.launcher.setPower(0.0);
                 robot.airplaneFeeder.setPosition(0.5);
             }
-/*
-           if (-gamepad2.left_stick_y > 0.1){
-                robot.setArmPower(0.45);
-            }
-            else if (-gamepad2.left_stick_y < -0.1){
-                robot.setArmPower(-0.45);
-            }
-            else{
-                robot.setArmPower(0);
-            }
-*/
-            //servos
+            */
+
 
 //grabber
             if (gamepad2.left_trigger > 0.5) {
@@ -137,10 +112,14 @@ public class OpMode3 extends LinearOpMode {
 //tilt arm
             if (gamepad2.left_stick_y > 0.7) {
                 robot.liftHex.setPower(-0.3);
+                robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
+
             }
 
             else if (gamepad2.left_stick_y < -0.7) {
                 robot.liftHex.setPower(0.5);
+                robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
+
             }
 
             else {
