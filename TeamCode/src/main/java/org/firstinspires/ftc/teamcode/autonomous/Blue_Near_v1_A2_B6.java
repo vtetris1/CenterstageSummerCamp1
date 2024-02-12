@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.autonomous;
 //test
 //commit test
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
 //ignore this for now
 @Autonomous(name="Blue_Near_v1_A2_B6")
+
 public class Blue_Near_v1_A2_B6 extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
     // Motor encoder parameter
