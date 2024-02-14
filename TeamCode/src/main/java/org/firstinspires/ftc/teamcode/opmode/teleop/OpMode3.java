@@ -40,8 +40,64 @@ public class OpMode3 extends LinearOpMode {
                     robot.motorbr.getCurrentPosition()
             ));
 
+
+            // Game Pad #1 Operations
+            // Launch airplane
+            if (gamepad1.right_trigger > 0.5) {
+                robot.airplaneLauncher.setPosition(0.5);
+                sleep(1000);
+                robot.airplaneLauncher.setPosition(0);
+            }
+
+// Game Pad #2 Operations
+//grabber
+            if (gamepad2.left_trigger > 0.5) {
+                robot.grabServoLeft.setPosition(1.0); // open
+            } else if (gamepad2.left_bumper) {
+                robot.grabServoLeft.setPosition(0.0); // close
+            }
+
+            if (gamepad2.right_trigger > 0.5) {
+                robot.grabServoRight.setPosition(0.0); // open
+            } else if (gamepad2.right_bumper) {
+                robot.grabServoRight.setPosition(1.0); // close
+            }
+
+
+//tilt arm for collecting pixels during teleop mode.
+            if (gamepad2.left_stick_y > 0.7) {
+                robot.liftHex.setPower(-0.3);
+                robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
+            }
+            else if (gamepad2.left_stick_y < -0.7) {
+                robot.liftHex.setPower(0.5);
+                robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
+            }
+            else {
+                robot.liftHex.setPower(0);
+            }
+
+//tilt servo
+            if (gamepad2.right_stick_y > 0.7) {
+                robot.tiltServoLeft.setPosition(1.0);
+            } else if (gamepad2.right_stick_y < -0.7) {
+                robot.tiltServoLeft.setPosition(0);
+            }
+
+// Hex (arm rotator) and Arm (Linear Actuator) operations for hanging up the robot.
+            if (gamepad2.x) {
+                robot.liftArm.setPower(0.3);    //set motor power
+                sleep(100);          // let motor run for some time seconds.
+                robot.liftArm.setPower(0);      //set lower motor power to maintain the position
+            }
+            if (gamepad2.y) {
+                robot.liftArm.setPower(-0.3);   //set motor power
+                sleep(100);          // let motor run for some time seconds.
+                robot.liftArm.setPower(0);      //set lower motor power to maintain the position
+            }
+
             //lift arm start
-            if (gamepad1.a) { //if button a pressed
+            if (gamepad2.a) { //if button a pressed
                 //tilt the lift to be upright
                 robot.liftHex.setPower(-0.5);   //set motor power
                 sleep(300);             // let motor run for some time seconds.
@@ -52,93 +108,18 @@ public class OpMode3 extends LinearOpMode {
                 sleep(350);             // let motor run for some time seconds.
                 robot.liftArm.setPower(0);
             }
-
-            if (gamepad2.y) {
-                robot.liftHex.setPower(-0.3);   //set motor power
+            else if (gamepad2.b) { //if button a pressed
+                //tilt the lift to be upright
+                robot.liftHex.setPower(-0.5);   //set motor power
                 sleep(300);             // let motor run for some time seconds.
                 robot.liftHex.setPower(-0.1);   //set lower motor power to maintain the position
 
-            }
-
-            if (gamepad1.a) { //if button a pressed
                 // Extend liftArm
                 robot.liftArm.setPower(0.8);
-                sleep(300);             // let motor run for some time seconds.
+                sleep(350);             // let motor run for some time seconds.
                 robot.liftArm.setPower(0);
             }
-            if (gamepad1.x) { //if button a pressed
-                // Retract liftArm
-                robot.liftArm.setPower(-1.0);
-                sleep(300);             // let motor run for some time seconds.
-                robot.liftArm.setPower(0);
-            }
-
-
-            // Launch airplane
-            /*
-            if (gamepad1.right_trigger > 0.5) {
-                // Tilt the launcher in a given degree in order to launch airplane over the bar
-                TiltLiftOne(-0.5, (int) (300 * 2.5), -0.1, 0.8, (int) (350 * 1.6), 0);
-
-                robot.launcher.setPower(-1.0);
-                sleep(3000);
-                robot.airplaneFeeder.setPosition(0);
-                sleep(1000);
-                robot.launcher.setPower(0.0);
-                robot.airplaneFeeder.setPosition(0.5);
-            }
-            */
-
-
-//grabber
-            if (gamepad2.left_trigger > 0.5) {
-                robot.grabServoLeft.setPosition(1.0); // open
-
-            } else if (gamepad2.left_bumper) {
-                robot.grabServoLeft.setPosition(0.0); // close
-
-
-            }
-
-            if (gamepad2.right_trigger > 0.5) {
-
-                robot.grabServoRight.setPosition(0.0); // open
-            } else if (gamepad2.right_bumper) {
-
-                robot.grabServoRight.setPosition(1.0); // close
-            }
-
-
-//tilt arm
-            if (gamepad2.left_stick_y > 0.7) {
-                robot.liftHex.setPower(-0.3);
-                robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
-
-            }
-
-            else if (gamepad2.left_stick_y < -0.7) {
-                robot.liftHex.setPower(0.5);
-                robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
-
-            }
-
-            else {
-                robot.liftHex.setPower(0);
-            }
-
-//tilt servo
-            if (gamepad2.right_stick_y > 0.7) {
-                robot.tiltServoLeft.setPosition(1.0);
-
-            } else if (gamepad2.right_stick_y < -0.7) {
-                robot.tiltServoLeft.setPosition(0);
-            }
-
-
         }
-
-
-        //emergency releases
     }
 
         private void TiltLiftOne ( double crankPowerBegin, int crankTimeMs, double crankPowerEnd,
