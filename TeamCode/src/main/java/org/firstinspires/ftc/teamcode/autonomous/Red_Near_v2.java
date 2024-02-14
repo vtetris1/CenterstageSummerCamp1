@@ -37,7 +37,7 @@ public class Red_Near_v2 extends LinearOpMode {
             robot.grabServoLeft.setPosition(0.0);
 
             int forwardTicks = 1215;
-            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.5,
                     true, robot.yaw0);
 
             telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\n",
@@ -53,7 +53,7 @@ public class Red_Near_v2 extends LinearOpMode {
 
 
 
-            if (robot.distanceL.getDistance(DistanceUnit.INCH) < 10) {
+            if (robot.distanceL.getDistance(DistanceUnit.INCH) < 12) {
 
                 forwardTicks = -200;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
@@ -65,9 +65,9 @@ public class Red_Near_v2 extends LinearOpMode {
 
                 turnToTargetYaw(40 + robot.yaw0, 0.7, 2000);
 
-                forwardTicks = 180;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
-                        true, robot.yaw0);
+                //forwardTicks = 180;
+                //driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        //true, robot.yaw0);
 
 
                 robot.grabServoRight.setPosition(0.0);
@@ -81,7 +81,7 @@ public class Red_Near_v2 extends LinearOpMode {
 
                 sleep(1500);
 
-                forwardTicks = -900;
+                forwardTicks = -720;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
                         true, robot.yaw0);
 
@@ -99,7 +99,7 @@ public class Red_Near_v2 extends LinearOpMode {
                 //driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
                         //true, robot.yaw0);
 
-                turnToTargetYaw(135 + robot.yaw0, 0.6, 3750);
+                turnToTargetYaw(130 + robot.yaw0, 0.6, 3750);
 
                 //forwardTicks = -1800;
                 //driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.55,
@@ -140,77 +140,116 @@ public class Red_Near_v2 extends LinearOpMode {
 
 
             }
-            else if (robot.distanceR.getDistance(DistanceUnit.INCH) < 10) {
+            else if (robot.distanceR.getDistance(DistanceUnit.INCH) < 12) {
 
                 forwardTicks = -500;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
                         true, robot.yaw0);
 
-                turnToTargetYaw(-24 + robot.yaw0, 0.7, 1800);
-
-                forwardTicks = 180;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
-                        true, robot.yaw0);
-
                 robot.tiltServoLeft.setPosition(1.0);
 
-                forwardTicks = 120;
+                turnToTargetYaw(-20 + robot.yaw0, 0.7, 1800);
+
+                forwardTicks = 500;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
                         true, robot.yaw0);
 
-                sleep(1250);
+
+                sleep(650);
 
                 robot.grabServoRight.setPosition(0.0);
                 robot.grabServoLeft.setPosition(0.0); //so pixel doesn't fall out
 
-                sleep(1000);
+                sleep(500);
 
                 robot.tiltServoLeft.setPosition(0.0);
                 sleep(100);
                 robot.grabServoRight.setPosition(1.0);
 
-                sleep(1500);
+                sleep(500);
 
                 forwardTicks = -200;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
                         true, robot.yaw0);
 
-                turnToTargetYaw(0 + robot.yaw0, 0.7, 2000);
+                sleep(500);
 
-                forwardTicks = 1500;
+                turnToTargetYaw(20 + robot.yaw0, 0.7, 2000);
+
+                sleep(500);
+
+                forwardTicks = -550;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
-                        true, robot.yaw0);
+                true, robot.yaw0);
 
-                turnToTargetYaw(90 + robot.yaw0, 0.6, 3750);
+                sleep(500);
 
-                forwardTicks = -2300;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.55,
-                        true,(90 + robot.yaw0));
+                turnToTargetYaw(108.5 + robot.yaw0, 0.7, 4000);
 
-                turnToTargetYaw(45 + robot.yaw0, 0.7, 2000);
 
-                forwardTicks = -1000;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.55,
-                        true,(45 + robot.yaw0));
-
-                turnToTargetYaw(90 + robot.yaw0, 0.7, 2000);
+                sleep(500);
 
                 robot.liftHex.setPower(0.5);
                 sleep(1500);
                 robot.liftHex.setPower(0);
 
-                // robot.tiltServo.setPosition(0.2);
-                forwardTicks = -1400;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.5,
-                        true,(90 + robot.yaw0));
+                sleep(500);
+
+                forwardTicks = -1900;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        true, 108.5 + robot.yaw0);
+
+                sleep(650);
 
                 robot.grabServoLeft.setPosition(1.0);
+
+                sleep(500);
+
+                robot.liftHex.setPower(-0.5);
+                sleep(1000);
+                robot.liftHex.setPower(0);
+
+                sleep(650);
+
+                turnToTargetYaw(-90 + robot.yaw0, 0.7, 3000);
+
+                forwardTicks = -1200;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        true, 180 + robot.yaw0);
+
+
+
+
+
+                //turnToTargetYaw(90 + robot.yaw0, 0.6, 3750);
+
+
+                //turnToTargetYaw(45 + robot.yaw0, 0.7, 2000);
+
+                //forwardTicks = -1000;
+                //driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.55,
+                        //true,(45 + robot.yaw0));
+
+                //turnToTargetYaw(90 + robot.yaw0, 0.7, 2000);
+
+                // robot.liftHex.setPower(0.5);
+                //sleep(1500);
+               // robot.liftHex.setPower(0);
+
+                // robot.tiltServo.setPosition(0.2);
+
+
+                //forwardTicks = -1400;
+                //driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.5,
+                        //true,(180 + robot.yaw0));
+
+
 
 
             } else {
                 forwardTicks = -200;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
-                        false, robot.yaw0);
+                        true, robot.yaw0);
 
                 sleep(100);
 
@@ -220,7 +259,7 @@ public class Red_Near_v2 extends LinearOpMode {
 
                 forwardTicks = 230;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
-                        false, robot.yaw0);
+                        true, robot.yaw0);
 
                 sleep(500);
 
@@ -234,38 +273,26 @@ public class Red_Near_v2 extends LinearOpMode {
                 sleep(100);
                 robot.grabServoRight.setPosition(1.0); //reset right grabber
 
-                forwardTicks = -150;
+                forwardTicks = 150;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
-                        false, robot.yaw0);
+                        true, robot.yaw0);
+
 
                 turnToTargetYaw(90+robot.yaw0, 0.6, 5000);
 
                 forwardTicks = -100;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
-                        false, robot.yaw0);
-
-
-                int sideTicks = 150;
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.5,
                         true, robot.yaw0);
 
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.5,
-                        true, robot.yaw0);
 
                 turnToTargetYaw(90+robot.yaw0, 0.42, 3000);
 
 
 
-                forwardTicks = -1100;
+                forwardTicks = -900;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
                         true, (90 + robot.yaw0));
 
-                sideTicks = 150;
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.5,
-                        true, robot.yaw0);
-
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.5,
-                        true, robot.yaw0);
 
                 turnToTargetYaw(90+robot.yaw0, 0.42, 3000);
 
@@ -276,14 +303,14 @@ public class Red_Near_v2 extends LinearOpMode {
 
 
 
-                forwardTicks = -1000;
+                forwardTicks = -925;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
                         true, (90 + robot.yaw0));
 
                 robot.grabServoLeft.setPosition(1.0);
 
 
-                sleep(100);
+                sleep(650);
 
                 robot.liftHex.setPower(-0.4);
                 sleep(1000);
