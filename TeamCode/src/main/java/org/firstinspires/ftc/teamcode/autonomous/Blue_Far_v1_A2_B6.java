@@ -252,7 +252,6 @@ public class Blue_Far_v1_A2_B6 extends LinearOpMode {
 
                 robot.grabServoLeft.setPosition(1.0);
 
-                robot.liftHex.setPower(-0.5);
 
 
 

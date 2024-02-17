@@ -27,7 +27,7 @@ public class OpMode3 extends LinearOpMode {
         // Put initialization blocks here.
         waitForStart();
         while (opModeIsActive()) {
-            double horizontal = -gamepad1.left_stick_x * 0.8;
+            double horizontal = gamepad1.left_stick_x * 0.8;
             double vertical = -gamepad1.left_stick_y * 0.8;
             double turn = gamepad1.right_stick_x * 0.8;
 
@@ -43,32 +43,27 @@ public class OpMode3 extends LinearOpMode {
             //lift arm start
             if (gamepad1.a) { //if button a pressed
                 //tilt the lift to be upright
-                robot.liftHex.setPower(-0.5);   //set motor power
-                sleep(300);             // let motor run for some time seconds.
-                robot.liftHex.setPower(-0.1);   //set lower motor power to maintain the position
-
-                // Extend liftArm
-                robot.liftArm.setPower(0.8);
-                sleep(350);             // let motor run for some time seconds.
-                robot.liftArm.setPower(0);
+                robot.liftArm.setPower(-0.5);   //set motor power
+                sleep(1000);             // let motor run for some time seconds.
+                robot.liftArm.setPower(0);   //set lower motor power to maintain the position
             }
 
             if (gamepad2.y) {
-                robot.liftHex.setPower(-0.3);   //set motor power
-                sleep(300);             // let motor run for some time seconds.
-                robot.liftHex.setPower(-0.1);   //set lower motor power to maintain the position
+                robot.liftHex.setPower(0.5);   //set motor power
+                sleep(1000);             // let motor run for some time seconds.
+                robot.liftHex.setPower(0);   //set lower motor power to maintain the position
 
             }
 
-            if (gamepad1.a) { //if button a pressed
+            if (gamepad1.x) { //if button a pressed
                 // Extend liftArm
-                robot.liftArm.setPower(0.8);
-                sleep(300);             // let motor run for some time seconds.
+                robot.liftHex.setPower(0.5);
+                sleep(250);             // let motor run for some time seconds.
                 robot.liftArm.setPower(0);
             }
-            if (gamepad1.x) { //if button a pressed
+            if (gamepad1.b) { //if button a pressed
                 // Retract liftArm
-                robot.liftArm.setPower(-1.0);
+                robot.liftHex.setPower(-0.4);
                 sleep(300);             // let motor run for some time seconds.
                 robot.liftArm.setPower(0);
             }
