@@ -1,23 +1,21 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 //test
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-//test
-//commit test
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
+
 //ignore this for now
-@Autonomous(name="Red_Near_v1_F4_D6")
-@Disabled
-public class Red_Near_v1_F4_D6 extends LinearOpMode {
+@Autonomous(name="Red_Near_v2")
+public class Red_Near_v2 extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
     // Motor encoder parameter
-    double ticksPerInch = 6.56;
-    double ticksPerDegree = 5.0;
+    double ticksPerInch = 31.3;
+    double ticksPerDegree = 15.6;
 
 
     @Override
@@ -30,208 +28,332 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-
-
         if (opModeIsActive()) {
+  //          robot.tiltServo.setPosition(0.65);
 
-            //robot.tiltServo.setPosition(0.65);
-            telemetry.update();
+            sleep(100);
 
             robot.grabServoRight.setPosition(1.0);
             robot.grabServoLeft.setPosition(0.0);
 
-            int forwardTicks = 1215; // default 1215
-            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.3,
+            int forwardTicks = 1215;
+            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.5,
                     true, robot.yaw0);
-
 
             telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\n",
                     robot.distanceR.getDistance(DistanceUnit.INCH),
                     robot.distanceL.getDistance(DistanceUnit.INCH)));
             telemetry.update();
 
+            robot.grabServoRight.setPosition(1.0);
+            robot.grabServoLeft.setPosition(0.0);
+
             sleep(1000);
 
-            if (robot.distanceL.getDistance(DistanceUnit.INCH) < 10) {
 
-                forwardTicks = -55; // default 1050
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.45,
+
+
+            if (robot.distanceL.getDistance(DistanceUnit.INCH) < 12) {
+
+                forwardTicks = -200;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
                         true, robot.yaw0);
 
-                turnToTargetYaw(90+robot.yaw0, 0.5, 5000);
+                robot.tiltServoLeft.setPosition(0.65);
 
-                forwardTicks = 200; // default 1050
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.45,
-                        true, robot.yaw0);
+                sleep(750);
 
-                //robot.autoPixel.setPosition(0.0);
+                turnToTargetYaw(40 + robot.yaw0, 0.7, 2000);
+
+                //forwardTicks = 180;
+                //driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        //true, robot.yaw0);
+
+
+                robot.grabServoRight.setPosition(0.0);
+                robot.grabServoLeft.setPosition(0.0); //so pixel doesn't fall out
+
+                sleep(1000);
+
+                robot.tiltServoLeft.setPosition(0.0);
+                sleep(100);
+                robot.grabServoRight.setPosition(1.0);
+
                 sleep(1500);
-                //requestOpModeStop();
 
-                robot.tiltServoLeft.setPosition(0);
+                forwardTicks = -720;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        true, robot.yaw0);
 
-                forwardTicks = -300; // default 1050
+                sleep(650);
+
+                //turnToTargetYaw(0 + robot.yaw0, 0.6, 3750);
+
+                //sleep(650);
+
+
+
+
+
+                //forwardTicks = 650;
+                //driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        //true, robot.yaw0);
+
+                turnToTargetYaw(130 + robot.yaw0, 0.6, 3750);
+
+                //forwardTicks = -1800;
+                //driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.55,
+                        //true,(90 + robot.yaw0));
+
+                //turnToTargetYaw(45 + robot.yaw0, 0.7, 2000);
+
+                forwardTicks = -1000;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.55,
-                        true, robot.yaw0);
+                        true, + robot.yaw0);
 
-                sleep(100);
+                //turnToTargetYaw(90 + robot.yaw0, 0.7, 2000);
 
-                int sideTicks = -100;
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.3,
-                        true, robot.yaw0);
-
-                turnToTargetYaw(-90+robot.yaw0, 0.5, 8000);
-                sleep(1000);
-                //robot.tiltServo.setPosition(0.2);
-                telemetry.update();
-                sleep(1000);
-
-                forwardTicks = 500; // default 1050
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.45,
-                        true, (-90 + robot.yaw0));
-
-                sleep(100);
-
-                robot.tiltServoLeft.setPosition(0);
-
-                //robot.boardPixel.setPosition(1.0);
-
-                sleep(1000);
-
-                //robot.boardPixel.setPosition(0.0);
-
+                robot.liftHex.setPower(0.5);
                 sleep(1500);
+                robot.liftHex.setPower(0);
 
-                forwardTicks = -120; // default 1050
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.65,
-                        true, (-90 + robot.yaw0));
+               // robot.tiltServo.setPosition(0.2);
+                forwardTicks = -1400;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.5,
+                        true,+ robot.yaw0);
 
-                sideTicks = 1300;
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.5,
+
+                robot.grabServoLeft.setPosition(1.0);
+
+                sleep(650);
+
+                robot.liftHex.setPower(-0.5);
+                sleep(1000);
+                robot.liftHex.setPower(0);
+
+
+                turnToTargetYaw(170 + robot.yaw0, 0.6, 3750);
+
+                forwardTicks = 1300;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.5,
+                        true,+ robot.yaw0);
+
+
+            }
+            else if (robot.distanceR.getDistance(DistanceUnit.INCH) < 12) {
+
+                forwardTicks = -500;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        true, robot.yaw0);
+
+                robot.tiltServoLeft.setPosition(1.0);
+
+                turnToTargetYaw(-20 + robot.yaw0, 0.7, 1800);
+
+                forwardTicks = 500;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        true, robot.yaw0);
+
+
+                sleep(650);
+
+                robot.grabServoRight.setPosition(0.0);
+                robot.grabServoLeft.setPosition(0.0); //so pixel doesn't fall out
+
+                sleep(500);
+
+                robot.tiltServoLeft.setPosition(0.0);
+                sleep(100);
+                robot.grabServoRight.setPosition(1.0);
+
+                sleep(500);
+
+                forwardTicks = -200;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
                         true, robot.yaw0);
 
                 sleep(500);
 
-            }
+                turnToTargetYaw(20 + robot.yaw0, 0.7, 2000);
 
-            else if (robot.distanceR.getDistance(DistanceUnit.INCH) < 10) {
-                forwardTicks = 110;
+                sleep(500);
+
+                forwardTicks = -550;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
-                        true, robot.yaw0);
+                true, robot.yaw0);
 
-                sleep(100);
+                sleep(500);
 
-                turnToTargetYaw(-60+robot.yaw0, 0.55, 6000);
-
-                sleep(100);
-
-                forwardTicks = 140;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
-                        true, robot.yaw0);
-
-                //robot.autoPixel.setPosition(0.0);
-
-                sleep(1300);
-
-                forwardTicks = -60;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
-                        true, robot.yaw0);
-
-                turnToTargetYaw(-90+robot.yaw0, 0.7, 4000);
+                turnToTargetYaw(108.5 + robot.yaw0, 0.7, 4000);
 
 
-                int sideTicks = -500;
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.5,
-                        true, robot.yaw0);
+                sleep(500);
 
-                forwardTicks = 60;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
-                        true, robot.yaw0);
-
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.6,
-                        true, (-90 + robot.yaw0));
-
-                turnToTargetYaw(-90+robot.yaw0, 0.6, 3000);
-
-                forwardTicks = 1600;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.7,
-                        true, (-90+ robot.yaw0));
-
-
-                sleep(1000);
-
-                //robot.boardPixel.setPosition(1.0);
-
-                sleep(1000);
-
-                //robot.boardPixel.setPosition(0.0);
-
+                robot.liftHex.setPower(0.5);
                 sleep(1500);
+                robot.liftHex.setPower(0);
+
+                sleep(500);
+
+                forwardTicks = -1900;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        true, 108.5 + robot.yaw0);
+
+                sleep(650);
+
+                robot.grabServoLeft.setPosition(1.0);
+
+                sleep(500);
+
+                robot.liftHex.setPower(-0.5);
+                sleep(1000);
+                robot.liftHex.setPower(0);
+
+                sleep(650);
+
+                turnToTargetYaw(-90 + robot.yaw0, 0.7, 3000);
+
+                forwardTicks = -1200;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        true, 180 + robot.yaw0);
+
+
+
+
+
+                //turnToTargetYaw(90 + robot.yaw0, 0.6, 3750);
+
+
+                //turnToTargetYaw(45 + robot.yaw0, 0.7, 2000);
+
+                //forwardTicks = -1000;
+                //driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.55,
+                        //true,(45 + robot.yaw0));
+
+                //turnToTargetYaw(90 + robot.yaw0, 0.7, 2000);
+
+                // robot.liftHex.setPower(0.5);
+                //sleep(1500);
+               // robot.liftHex.setPower(0);
+
+                // robot.tiltServo.setPosition(0.2);
+
+
+                //forwardTicks = -1400;
+                //driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.5,
+                        //true,(180 + robot.yaw0));
+
+
+
+
+            } else {
+                forwardTicks = -200;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+                        true, robot.yaw0);
+
+                sleep(100);
+
+                robot.tiltServoLeft.setPosition(1.0);
+
+                sleep(500);
+
+                forwardTicks = 230;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+                        true, robot.yaw0);
+
+                sleep(500);
+
+                robot.grabServoRight.setPosition(0.0);
+                robot.grabServoLeft.setPosition(0.0); //so pixel doesn't fall out
+    //            robot.autoPixel.setPosition(0.0);
+
+                sleep(1000);
+
+                robot.tiltServoLeft.setPosition(0.0);
+                sleep(100);
+                robot.grabServoRight.setPosition(1.0); //reset right grabber
+
+                forwardTicks = 150;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+                        true, robot.yaw0);
+
+
+                turnToTargetYaw(90+robot.yaw0, 0.6, 5000);
 
                 forwardTicks = -100;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.5,
-                        true, (-90 + robot.yaw0));
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+                        true, robot.yaw0);
 
-                sideTicks = 1600;
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.6,
-                        true, (-90 + robot.yaw0));
 
-                sleep(500);
+                turnToTargetYaw(90+robot.yaw0, 0.42, 3000);
 
-                forwardTicks = 500;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.5,
-                        true, (-90 + robot.yaw0));
-                //requestOpModeStop();
+
+
+                forwardTicks = -900;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        true, (90 + robot.yaw0));
+
+
+                turnToTargetYaw(90+robot.yaw0, 0.42, 3000);
+
+
+                robot.liftHex.setPower(0.5);
+                sleep(1500);
+                robot.liftHex.setPower(0);
+
+
+
+                forwardTicks = -925;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+                        true, (90 + robot.yaw0));
+
+                robot.grabServoLeft.setPosition(1.0);
+
+
+                sleep(650);
+
+                robot.liftHex.setPower(-0.4);
+                sleep(1000);
+                robot.liftHex.setPower(0);
+
+                forwardTicks = 200;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        true, robot.yaw0);
+
+                turnToTargetYaw(robot.yaw0, 0.42, 3000);
+
+                forwardTicks = -1450;
+                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
+                        true, robot.yaw0);
+
+
+
+
+
+
+
+
+
+
+/*
+                robot.boardPixel.setPosition(1.0);
+                sleep(1000);
+                robot.boardPixel.setPosition(0.7);
+                sleep(1000);
+                robot.boardPixel.setPosition(0.0);
+*/
 
             }
 
-            else {
-                forwardTicks = 100;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.42,
-                        true, robot.yaw0);
 
-                robot.tiltServoLeft.setPosition(0);
-
-                sleep(1500);
-
-                forwardTicks = -300;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.42,
-                        false, robot.yaw0);
-
-                turnToTargetYaw(-90+robot.yaw0, 0.42, 6000);
-
-                forwardTicks = 1800;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.45,
-                        true, (-90 + robot.yaw0));
-
-
-                sleep(100);
-
-                //robot.boardPixel.setPosition(1.0);
-                sleep(1500);
-                //robot.boardPixel.setPosition(0.0);
-
-                sleep(2000);
-
-                forwardTicks = -150;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.45,
-                        true, (-90 + robot.yaw0));
-
-                int sideTicks = 1300;
-                driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.4,
-                        true, robot.yaw0);
-
-                forwardTicks = 500;
-                driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.5,
-                        true, (-90 + robot.yaw0));
-
-
+            while (opModeIsActive()) {
+                telemetry.addLine(String.format("DistanceR: %.1f inch\nDistanceL: %.1f inch\nCurrent Yaw: %.1f",
+                        robot.distanceR.getDistance(DistanceUnit.INCH),
+                        robot.distanceL.getDistance(DistanceUnit.INCH),
+                        robot.getCurrentYaw()));
+                telemetry.update();
             }
         }
-
-
-
-
     }
 
     private void driveMotors(int flTarget, int blTarget, int frTarget, int brTarget,
@@ -239,7 +361,7 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
                              boolean bKeepYaw, double targetYaw){
         double currentYaw, diffYaw;
         double powerDeltaPct, powerL, powerR;
-        double powerLeftPctToCounterCOG = 1.05;
+        double leftRatioToCounterCOG = 0.95;
         int direction;
 
         robot.motorfl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -247,19 +369,13 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
         robot.motorfr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.motorbr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        // set Brake zero power behavior
-        robot.motorfr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.motorfl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.motorbr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.motorbl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        robot.motorfl.setTargetPosition((int)(flTarget * powerLeftPctToCounterCOG));
-        robot.motorbl.setTargetPosition((int)(blTarget * powerLeftPctToCounterCOG));
+        robot.motorfl.setTargetPosition(flTarget);
+        robot.motorbl.setTargetPosition(blTarget);
         robot.motorfr.setTargetPosition(frTarget);
         robot.motorbr.setTargetPosition(brTarget);
 
-        robot.motorfl.setPower(power);
-        robot.motorbl.setPower(power);
+        robot.motorfl.setPower(power * leftRatioToCounterCOG);
+        robot.motorbl.setPower(power * leftRatioToCounterCOG);
         robot.motorfr.setPower(power);
         robot.motorbr.setPower(power);
 
@@ -275,21 +391,13 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
                 && (flTarget == brTarget)) )
             bKeepYaw = false;
         direction = (flTarget > 0) ? 1 : -1;
-
         while(opModeIsActive() &&
                 (robot.motorfl.isBusy() &&
                         robot.motorbl.isBusy() &&
                         robot.motorfr.isBusy() &&
                         robot.motorbr.isBusy())){
-        /*
-        while(opModeIsActive() &&
-                (robot.motorfl.isBusy() ||
-                        robot.motorbl.isBusy() ||
-                        robot.motorfr.isBusy() ||
-                        robot.motorbr.isBusy())){
-
-         */
             if (bKeepYaw) {
+
                 currentYaw = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
                 if (Math.abs(currentYaw - targetYaw) > 2.0)
                     powerDeltaPct = 0.25;
@@ -303,8 +411,6 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
                     powerL = power * (1 + direction * powerDeltaPct);
                     powerR = power * (1 - direction * powerDeltaPct);
                 }
-                // Counter right sided COG by reducing power on the left.
-                powerL *= powerLeftPctToCounterCOG;
                 if (powerL > 1.0)
                     powerL = 1.0;
                 if (powerR > 1.0)
@@ -321,6 +427,10 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
         robot.motorbl.setPower(0);
         robot.motorfr.setPower(0);
         robot.motorbr.setPower(0);
+    }
+
+    private void nonEncoderDrive(){
+
     }
 
     private void driveStrafe(int flTarget, int blTarget, int frTarget, int brTarget,
@@ -395,6 +505,7 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
         robot.motorbr.setPower(0);
     }
 
+
     private void turnToTargetYaw(double targetYawDegree, double power, long maxAllowedTimeInMills){
         long timeBegin, timeCurrent;
         double currentYaw = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);;
@@ -412,6 +523,7 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
             ticks = (int) (diffYaw * ticksPerDegree);
             if (ticks > 200)
                 ticks = 200;
+
             tickDirection = (currentYaw < targetYawDegree) ? -1 : 1;
             if (ticks < 1)
                 break;
@@ -437,9 +549,9 @@ public class Red_Near_v1_F4_D6 extends LinearOpMode {
 
     private void deployPreloadedPixel1(int timeIntervalMs) {
         // Deploy preloaded pixel 1
-       // robot.autoPixel.setPosition(1.0);
+     //   robot.autoPixel.setPosition(1.0);
         sleep(timeIntervalMs);
-       // robot.autoPixel.setPosition(0.5);
+     //   robot.autoPixel.setPosition(0.5);
         sleep(timeIntervalMs);
 
     }

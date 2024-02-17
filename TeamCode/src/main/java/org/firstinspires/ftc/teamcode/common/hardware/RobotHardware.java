@@ -74,7 +74,7 @@ public class RobotHardware {
     public Servo grabServoLeft = null;
 
 
-    public Servo airplaneFeeder = null;
+    public Servo airplaneLauncher = null;
 
     public IMU imu;
 
@@ -114,7 +114,7 @@ public class RobotHardware {
 
         // Define and initialize ALL installed servos.
 
-        airplaneFeeder = hwMap.get(Servo.class, "feeder");
+        airplaneLauncher = hwMap.get(Servo.class, "feeder");
         tiltServoRight = hwMap.get(Servo.class, "tiltServoR");
         grabServoRight = hwMap.get(Servo.class, "grabServoR");
         tiltServoLeft = hwMap.get(Servo.class, "tiltServoL");
@@ -127,6 +127,8 @@ public class RobotHardware {
         distanceR = hwMap.get(DistanceSensor.class, "distanceR");
         distanceL = hwMap.get(DistanceSensor.class, "distanceL");
 
+        // Set airplane launcher default servo position
+        airplaneLauncher.setPosition(0);
 
         // reverse motor directions
         motorbl.setDirection(DcMotor.Direction.REVERSE);
