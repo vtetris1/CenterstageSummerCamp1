@@ -222,7 +222,7 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
                         false, robot.yaw0);
 
 
-                int sideTicks = 150;
+                int sideTicks = -150;
                 driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.5,
                         true, robot.yaw0);
 
@@ -237,7 +237,7 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.6,
                         true, (90 + robot.yaw0));
 
-                sideTicks = 150;
+                sideTicks = -150;
                 driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.5,
                         true, robot.yaw0);
 

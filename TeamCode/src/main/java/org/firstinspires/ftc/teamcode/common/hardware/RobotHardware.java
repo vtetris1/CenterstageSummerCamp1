@@ -182,6 +182,32 @@ public class RobotHardware {
     public void setArmsMode(DcMotor.RunMode mode) {
         //linearSlider.setMode(mode);
     }
+    public void setDriveForward(double fl, double fr, double bl, double br){
+        if (fl > 1.0)
+            fl = 1.0;
+        else if (fl < -1.0)
+            fl = -1.0;
+
+        if (fr > 1.0)
+            fr = 1.0;
+        else if (fr < -1.0)
+            fr = -1.0;
+
+        if (bl > 1.0)
+            bl = 1.0;
+        else if (bl < -1.0)
+            bl = -1.0;
+
+        if (br > 1.0)
+            br = 1.0;
+        else if (br < -1.0)
+            br = -1.0;
+
+        motorfl.setPower(fl);
+        motorfr.setPower(fr);
+        motorbl.setPower(bl);
+        motorbr.setPower(br);
+    }
 
 
     public void setDrivePower(double fl, double fr, double bl, double br) {

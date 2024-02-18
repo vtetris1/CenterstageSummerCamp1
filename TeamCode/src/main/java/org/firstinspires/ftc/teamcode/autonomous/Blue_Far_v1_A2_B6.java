@@ -217,7 +217,7 @@ public class Blue_Far_v1_A2_B6 extends LinearOpMode {
                         false, robot.yaw0);
 
 
-                int sideTicks = -180;
+                int sideTicks = 180;
                 driveMotors((int)(sideTicks*1.2), -sideTicks, -sideTicks, (int)(sideTicks*1.2), 0.5,
                         true, robot.yaw0);
 
