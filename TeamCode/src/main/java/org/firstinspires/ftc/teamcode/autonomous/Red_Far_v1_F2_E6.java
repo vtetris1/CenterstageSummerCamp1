@@ -195,7 +195,7 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
 
                 sleep(500);
 
-                forwardTicks = 300;
+                forwardTicks = 270;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
                         false, robot.yaw0);
 
@@ -217,7 +217,7 @@ public class Red_Far_v1_F2_E6 extends LinearOpMode {
 
                 turnToTargetYaw(90+robot.yaw0, 0.6, 5000);
 
-                forwardTicks = -100;
+                forwardTicks = -80;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
                         false, robot.yaw0);
 

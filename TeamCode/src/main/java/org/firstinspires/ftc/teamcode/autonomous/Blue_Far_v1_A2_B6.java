@@ -190,7 +190,7 @@ public class Blue_Far_v1_A2_B6 extends LinearOpMode {
 
                 sleep(500);
 
-                forwardTicks = 300;
+                forwardTicks = 270;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
                         false, robot.yaw0);
 
@@ -206,7 +206,7 @@ public class Blue_Far_v1_A2_B6 extends LinearOpMode {
                 sleep(100);
                 robot.grabServoRight.setPosition(1.0); //reset right grabber
 
-                forwardTicks = -150;
+                forwardTicks = -110;
                 driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
                         false, robot.yaw0);
 
